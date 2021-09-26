@@ -3,15 +3,20 @@ import './App.css';
 
 import { Spinner } from './components/Spinner/Spinner';
 
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Login from './pages/login';
+import Register from './pages/register';
+import Emprise from './pages/emprise';
 
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { useMediaQuery } from '@mui/material';
 import { authContext } from './context/appContext';
+import Navbar from './components/Navbar/Navbar';
 
 
 const App = () => {
     const { userData } = useContext(authContext);
+
+    const isMobile = useMediaQuery('(max-width: 600px)')
 
     const checkIfRequireAuth = (requireSession, Component) => {
         if (userData.loading)
@@ -28,6 +33,7 @@ const App = () => {
 
     return (
         <Router>
+            <Navbar isMobile={isMobile}/>
             <Switch>
                 <Route exact path="/"
                     render={() => <Redirect to="/home" />} />
@@ -41,7 +47,7 @@ const App = () => {
                     render={() => checkIfRequireAuth(false, Register)} />
 
                 <Route path="/mybootcamp"
-                    render={() => <span>mybootcamp</span>} />
+                    render={() => <Emprise/>} />
                 <Route path="/subscriptions"
                     render={() => <span>suscriptions</span>} />
 
