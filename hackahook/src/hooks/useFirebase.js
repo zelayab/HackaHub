@@ -22,6 +22,8 @@ const firebaseConfig = {
   appId: "1:986160142604:web:82daccc556049b46dd5129",
 };
 
+let handleAuth = false;
+
 const useFirebase = () => {
   // Firebase Initialize
   const app = initializeApp(firebaseConfig); // Firebase
@@ -115,11 +117,17 @@ const useFirebase = () => {
 
   // -> auth.onAuthStateChanged:
   const handleAuthChange = (user) => {
-    setUserData({ ...userData, logged: user ? true : false, loading: false });
+    if (user) {
+      setUserData({ ...userData, logged: true, loading: false });
+    } else {
+      setUserData({ ...userData, logged: true, loading: false });
+    }
   };
 
-  // Detectar el login/register o logout de un usuario
-  auth.onAuthStateChanged(handleAuthChange);
+  if (!handleAuth) {
+    handleAuth = true;
+    auth.onAuthStateChanged(handleAuthChange);
+  }
 
   // Getters/Setters
   const getDb = () => db;
@@ -132,6 +140,7 @@ const useFirebase = () => {
     userData, // Nos permite ver si esta logueado(propiedad user) o obtener datos
     getDb, // Nos permite hacer peticiones al Firestore
     getCurrentAuth, // Obtenemos el getAuth()
+    handleAuthChange,
   };
 };
 
