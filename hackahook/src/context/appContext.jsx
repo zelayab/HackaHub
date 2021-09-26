@@ -17,7 +17,7 @@ const Context = (props) => {
     return (
         // Decimos que hookFirebase va a estar dentro de este contexto
         // para obtenerlo luego
-        <authContext.Provider value={{ hookFirebase }}>
+        <authContext.Provider value={hookFirebase}>
             {children}
         </authContext.Provider>
     )

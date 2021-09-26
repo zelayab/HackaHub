@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { initializeApp } from "firebase/app";
 import { getFirestore, doc, setDoc } from "firebase/firestore/lite";
@@ -9,6 +9,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   sendEmailVerification,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 
 import FirebaseUtils from "../utils/FirebaseUtils";
@@ -22,20 +23,34 @@ const firebaseConfig = {
   appId: "1:986160142604:web:82daccc556049b46dd5129",
 };
 
-let handleAuth = false;
-
 const useFirebase = () => {
   // Firebase Initialize
-  const app = initializeApp(firebaseConfig); // Firebase
+  initializeApp(firebaseConfig); // Firebase
   const db = getFirestore(); // Firestore
 
   const auth = getAuth(); // Firebase/auth
 
   const [userData, setUserData] = useState({
     loading: true, // Verificar si esta en proceso de autentificado (fetching)
-    user: null, // Verificar si esta logueado
+    logged: false, // Verificar si esta logueado
     emailVerified: false, // Verificar si verifico el email
   });
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserData({
+          logged: true,
+          loading: false,
+          emailVerified: user.emailVerified,
+        });
+      } else {
+        setUserData({ logged: false, loading: false, emailVerified: false });
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   // Loguear un usuario
   const userLogin = async (email, password) => {
@@ -112,35 +127,49 @@ const useFirebase = () => {
     }
   };
 
-  // Destruir la session del usuario
-  const userLogout = () => auth.signOut();
-
-  // -> auth.onAuthStateChanged:
-  const handleAuthChange = (user) => {
-    if (user) {
-      setUserData({ ...userData, logged: true, loading: false });
-    } else {
-      setUserData({ ...userData, logged: true, loading: false });
+  // Recuperar Contraseña
+  const userSendPasswordRecover = async (email) => {
+    try {
+      await sendPasswordResetEmail(auth, email);
+      return {
+        error: false,
+      };
+    } catch (error) {
+      return {
+        error: true,
+        errorCode: error.code,
+        displayError: FirebaseUtils.handleErrorCode(error.code),
+      };
     }
   };
 
-  if (!handleAuth) {
-    handleAuth = true;
-    auth.onAuthStateChanged(handleAuthChange);
-  }
+  // Destruir la session del usuario
+  const userLogout = () => {
+    return auth.signOut();
+  };
+
+  // -> auth.onAuthStateChanged:
+  // const handleAuthChange = };
+  // if (!handleAuth) {
+  //   handleAuth = true;
+  // }
 
   // Getters/Setters
-  const getDb = () => db;
-  const getCurrentAuth = () => auth;
+  const getDb = () => {
+    return db;
+  };
+  const getCurrentAuth = () => {
+    return auth;
+  };
 
   return {
     userLogin, // Nos permite acceder
     userRegister, // Nos permite registrarnos
     userLogout, // Nos permite salir de la cuenta
     userData, // Nos permite ver si esta logueado(propiedad user) o obtener datos
+    userSendPasswordRecover, // Nos permite enviar un link para recuperar la contraseña
     getDb, // Nos permite hacer peticiones al Firestore
     getCurrentAuth, // Obtenemos el getAuth()
-    handleAuthChange,
   };
 };
 
