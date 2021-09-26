@@ -5,7 +5,7 @@ import { Spinner } from './components/Spinner/Spinner';
 
 import Login from './pages/login';
 import Register from './pages/register';
-import Emprise from './pages/emprise';
+import Enterprise from './pages/Enterprise';
 
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { useMediaQuery } from '@mui/material';
@@ -86,7 +86,7 @@ const App = () => {
                     render={() => requireAuth(Register)} /> */}
 
                 <Route path="/mybootcamp"
-                    render={() => <Emprise/>} />
+                    render={() => <Enterprise/>} />
                 <Route path="/subscriptions"
                     render={() => <span>suscriptions</span>} />
 
