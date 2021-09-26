@@ -8,28 +8,14 @@ import Register from './pages/Register';
 
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { authContext } from './context/appContext';
-import { List, ListItem, Divider, ListItemText } from '@mui/material';
+import { Button } from '@mui/material';
 
 const ComponenteHome = () => {
-
     return (
         <div>
-            <List component="nav" aria-label="mailbox folders">
-                <ListItem button>
-                    <ListItemText primary="Inbox" />
-                </ListItem>
-                <Divider />
-                <ListItem button divider>
-                    <ListItemText primary="Drafts" />
-                </ListItem>
-                <ListItem button>
-                    <ListItemText primary="Trash" />
-                </ListItem>
-                <Divider light />
-                <ListItem button>
-                    <ListItemText primary="Spam" />
-                </ListItem>
-            </List>
+            <Button
+                onClick={getInfo}
+            >Obtener Informacion</Button>
             hola
         </div>
     )

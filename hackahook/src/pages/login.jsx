@@ -119,7 +119,7 @@ const Login = () => {
                     <TextField
                         error={formStatus.email.error}
                         margin="normal"
-                        type="text"
+                        type="email"
                         fullWidth
                         label="Email"
                         inputRef={emailRef}
