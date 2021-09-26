@@ -80,7 +80,15 @@ const useFirebase = () => {
   };
 
   // Registrar un usuario
-  const userRegister = async (email, firstName, lastName, password) => {
+  const userRegister = async (
+    email,
+    linkedin,
+    pais,
+    repositorio,
+    password,
+    repPassword,
+    descripcion
+  ) => {
     try {
       // Registrar al usuario, en caso de error(ya existir) salta al catch
       const credentials = await createUserWithEmailAndPassword(
@@ -106,8 +114,12 @@ const useFirebase = () => {
       // Creamos y colocamos contenido con la referencia creada
       await setDoc(usersCol, {
         email: credentials.user.email,
-        firstName,
-        lastName,
+        linkedin,
+        pais,
+        repositorio,
+        password,
+        repPassword,
+        descripcion,
         createdAt: new Date().toISOString(),
       });
 
