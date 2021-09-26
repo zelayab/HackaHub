@@ -1,11 +1,11 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with: [Firebase],[React-Bootsrap],[CreateReactApp]
+This project was bootstrapped with: [Firebase],[MaterialUI],[CreateReactApp]
 
 ## This project
 
 The project its a Login/Register with differents pages based on React, Firebase.
-The design is created with react-bootstrap.
+The design is created with materialUI.
 
 In the project directory, you can run:
 
