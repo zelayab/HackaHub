@@ -1,19 +1,21 @@
-import React, {  useState } from 'react';
-import { authContext } from '../../context/authContext';
+import React, { useContext, useState } from 'react';
+
+import { authContext } from '../../context/appContext';
 import { Box } from '@mui/system';
-import { AppBar, , IconButton, Toolbar, Typography, Link, Drawer, ListItem, ListItemText } from '@mui/material';
+import { AppBar, IconButton, Toolbar, Typography, Link, Drawer, ListItem, ListItemText } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
 
 const Navbar = (props) => {
     const { isMobile } = props;
-    const logged = false;
-    const loading = false;
-    // const { logged, loading, logout } = useContext(authContext);
+
+    const { userData, userLogout } = useContext(authContext);
 
     const [openDrawer, setOpenDrawer] = useState(false);
 
     const handleLogout = async (e) => {
         e.preventDefault();
+
+        userLogout();
     }
 
     return (
@@ -59,10 +61,10 @@ const Navbar = (props) => {
                     </Typography>
 
                     {
-                        loading || isMobile ?
+                        userData.loading || isMobile ?
                             <span></span>
                         :
-                            logged ?
+                             userData.logged ?
                             <>
                                 <Link 
                                         href="/"
@@ -77,7 +79,7 @@ const Navbar = (props) => {
                             :
                             <>
                                 <Link 
-                                    href="/signin" 
+                                    href="/login" 
                                     color="inherit" 
                                     underline="none"
                                     sx={{ mr: 2 }}
@@ -85,7 +87,7 @@ const Navbar = (props) => {
                                     Sign In
                                 </Link>
                                 <Link 
-                                    href="/signup" 
+                                    href="/register" 
                                     color="inherit" 
                                     underline="none"
                                 >

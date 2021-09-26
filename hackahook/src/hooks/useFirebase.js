@@ -173,6 +173,7 @@ const useFirebase = () => {
     userRegister, // Nos permite registrarnos
     userLogout, // Nos permite salir de la cuenta
     userData, // Nos permite ver si esta logueado(propiedad user) o obtener datos
+    setUserData,
     userSendPasswordRecover, // Nos permite enviar un link para recuperar la contraseña
     getDb, // Nos permite hacer peticiones al Firestore
     getCurrentAuth, // Obtenemos el getAuth()

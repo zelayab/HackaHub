@@ -1,4 +1,5 @@
 import { useContext, useState, useRef } from "react";
+import { Redirect } from 'react-router-dom';
 
 import { Container, Box, Avatar, Typography, Grid, TextField, Button, Alert } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -19,7 +20,7 @@ const Login = () => {
         password: { error: false, }
     });
 
-    const { userLogin, userSendPasswordRecover } = useContext(authContext);
+    const { userLogin, userData, setUserData, userSendPasswordRecover } = useContext(authContext);
 
     const handleRecoverPassword = (e) => {
         e.preventDefault();
@@ -86,6 +87,7 @@ const Login = () => {
                     }
                     else {
                         // Logueado correctamente
+                        setUserData({...userData, emailVerified: userData.emailVerified});
                     }
                 });
         }

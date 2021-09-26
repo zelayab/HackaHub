@@ -44,6 +44,26 @@ const App = () => {
 
     const isMobile = useMediaQuery('(max-width: 600px)')
 
+    // const protectedPath = (Component) => {
+    //     if (userData.loading)
+    //       return <Spinner />
+    
+    //     if (!userData.logged)
+    //       return <Redirect to="/login" />
+    
+    //     return <Component />
+    //   }
+    
+    //   const requireAuth = (Component) => {
+    //     if (userData.loading)
+    //       return <Spinner />
+    
+    //     if (userData.logged)
+    //       return <Redirect to="/" />
+    
+    //     return <Component />
+    //   };
+
     const checkIfRequireAuth = (requireSession, Component) => {
         if (userData.loading)
             return <Spinner />
@@ -61,16 +81,26 @@ const App = () => {
         <Router>
             <Navbar isMobile={isMobile}/>
             <Switch>
-                <Route exact path="/"
-                    render={() => <Redirect to="/home" />} />
+            <Route exact path="/"
+                    render={() => checkIfRequireAuth(true, ComponenteHome)} />
 
                 <Route path="/home"
-                    render={() => <ComponenteHome />} />
+                    render={() => checkIfRequireAuth(true, ComponenteHome)} />
 
                 <Route path="/login"
                     render={() => checkIfRequireAuth(false, Login)} />
                 <Route path="/register"
                     render={() => checkIfRequireAuth(false, Register)} />
+                {/* <Route exact path="/"
+                    render={() => protectedPath(ComponenteHome)} />
+
+                <Route path="/home"
+                    render={() => protectedPath(ComponenteHome)} />
+
+                <Route path="/login"
+                    render={() => requireAuth(Login)} />
+                <Route path="/register"
+                    render={() => requireAuth(Register)} /> */}
 
                 <Route path="/mybootcamp"
                     render={() => <Emprise/>} />
