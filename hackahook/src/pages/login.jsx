@@ -1,6 +1,6 @@
 import { useContext, useState, useRef } from "react";
 
-import { Container, Box, Avatar, Typography, Grid, TextField, Link, Button, Alert, AlertTitle } from '@mui/material';
+import { Container, Box, Avatar, Typography, Grid, TextField, Button, Alert } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { authContext } from "../context/appContext";

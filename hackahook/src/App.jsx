@@ -1,38 +1,49 @@
 import React, { useContext } from 'react';
 import './App.css';
 
-import Login from './pages/Login';
+import { Spinner } from './components/Spinner/Spinner';
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import Register from './pages/Register';
+
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import { authContext } from './context/appContext';
 
-const authSection = () => {
-}
-
-const checkIsUserAuth = () => {
-}
 
 const App = () => {
     const { userData } = useContext(authContext);
+
+    const checkIfRequireAuth = (requireSession, Component) => {
+        if (userData.loading)
+            return <Spinner />
+
+        if (requireSession && !userData.logged)
+            return <Redirect to="/login" />
+
+        if (!requireSession && userData.logged)
+            return <Redirect to="/" />
+
+        return <Component />
+    }
 
     return (
         <Router>
             <Switch>
                 <Route exact path="/"
-                    render={() => <span></span>} />
+                    render={() => <Redirect to="/home" />} />
 
                 <Route path="/home"
-                    render={() => <span></span>} />
+                    render={() => <span>home</span>} />
 
                 <Route path="/login"
-                    render={() => <Login />} />
+                    render={() => checkIfRequireAuth(false, Login)} />
                 <Route path="/register"
-                    render={() => <span></span>} />
+                    render={() => checkIfRequireAuth(false, Register)} />
 
                 <Route path="/mybootcamp"
-                    render={() => <span></span>} />
+                    render={() => <span>mybootcamp</span>} />
                 <Route path="/subscriptions"
-                    render={() => <span></span>} />
+                    render={() => <span>suscriptions</span>} />
 
                 <Route path="*">
                     <span>404 - Not Found</span>

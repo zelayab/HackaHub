@@ -148,12 +148,6 @@ const useFirebase = () => {
     return auth.signOut();
   };
 
-  // -> auth.onAuthStateChanged:
-  // const handleAuthChange = };
-  // if (!handleAuth) {
-  //   handleAuth = true;
-  // }
-
   // Getters/Setters
   const getDb = () => {
     return db;
