@@ -5,6 +5,7 @@ import {
   getDoc,
   getDocs,
   addDoc,
+  orderBy,
   collection,
   query,
   where,
@@ -34,6 +35,8 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
   const getUserInformation = async (uid) => {
     // Armamos la referencia collection "users", del documento "uid"
     // { users: { uid: {} } }
+    if (uid === undefined) return 0;
+
     const userRef = doc(db, "users", uid);
 
     // Utilizamos la anterior referencia y obtenemos los datos
@@ -52,9 +55,13 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
     try {
       const q = all
         ? // Todos los bootcamp
-          collection(db, "bootcamps")
+          query(collection(db, "bootcamps"), orderBy("createdAt", "desc"))
         : // Filtrado por uid
-          query(collection(db, "bootcamps"), where("uidCreator", "==", uid));
+          query(
+            collection(db, "bootcamps"),
+            where("uidCreator", "==", uid),
+            orderBy("createdAt", "desc")
+          );
 
       // Dependiendo del query, son los datos que se van a devolver
       const querySnapshot = await getDocs(q);
@@ -69,13 +76,13 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
     return result;
   };
 
-  const postBootcamp = async (uidCreator, description) => {
+  const postBootcamp = async (uidCreator, descripcion) => {
     // addDoc ya adhiere un uid aleatorio de documento
     // Obtenemos la collection bootcamps y posteamos con los datos del parametro
     await addDoc(collection(db, "bootcamps"), {
       uidCreator,
       // title,
-      description,
+      descripcion,
       createdAt: new Date().toISOString(),
     });
   };
@@ -89,11 +96,12 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
     try {
       const q = all
         ? // Todos los bootcamp
-          collection(db, "subscriptions")
+          query(collection(db, "subscriptions"), orderBy("createdAt", "desc"))
         : // Filtrado por uid
           query(
             collection(db, "subscriptions"),
-            where(enterprise ? "uidBootcamp" : "uidCreator", "==", uid)
+            where(enterprise ? "uidBootcamp" : "uidCreator", "==", uid),
+            orderBy("createdAt", "desc")
           );
 
       const querySnapshot = await getDocs(q);

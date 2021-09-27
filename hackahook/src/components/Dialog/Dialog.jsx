@@ -5,6 +5,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { TextField } from '@mui/material';
 
 export default function AlertDialog(props) {
   return (
@@ -22,6 +23,20 @@ export default function AlertDialog(props) {
           <DialogContentText>
             {props.text}
           </DialogContentText>
+          {
+            (props.insertTextField === undefined) ? <></>
+              :
+              <TextField
+                autoFocus
+                margin="dense"
+                label="Descripcion"
+                type="text"
+                fullWidth
+                variant="standard"
+                onChange={props.handleChange}
+              />
+          }
+
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleReject}>No Aceptar</Button>

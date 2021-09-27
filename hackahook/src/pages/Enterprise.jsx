@@ -2,46 +2,29 @@ import { useContext, useEffect, useState } from "react";
 
 import { Container } from "@mui/material"
 import TextArea from "../components/TextArea/TextArea"
-import Paper from '@mui/material/Paper';
 import AlertDialog from "../components/Dialog/Dialog";
 import { authContext } from "../context/appContext";
 
-// const jsonData = [
-//     {
-//         usuario: 'Empresa 1',
-//         descripcion: 'Esta es una descripcion'
-//     },
-//     {
-//         usuario: 'Empresa 2',
-//         descripcion: 'Esta es una descripcion'
-//     },
-//     {
-//         usuario: 'Empresa 3',
-//         descripcion: 'Esta es una sdescripcion'
-//     },
-//     {
-//         usuario: 'Empresa 4',
-//         descripcion: 'Esta es una ddescripcion'
-//     },
-//     {
-//         usuario: 'Empresa 5',
-//         descripcion: 'Esta es una adescripcion'
-//     }
-// ]
-
 // Seccion que muestra las bootcamps que tiene una empresa
-const Enterprise = () => {
-    const { userData, getBootcamp, userInformation } = useContext(authContext);
-    const [listBootcamp, setListBootcamp] = useState([]);
+const Enterprise = (props) => {
+    const { userData, getBootcamp, getSubscription, userInformation } = useContext(authContext);
+    const [listInformation, setListInformation] = useState([]);
 
     useEffect(() => {
         (async () => {
             if (userData.logged) {
-                // Obtenemos la bootcamp que tiene la empresa
-                const bootcamp = await getBootcamp(userInformation.uid);
+                if (userInformation.type && props.pathname === "/mybootcamp") {
+                    // Obtenemos la bootcamp que tiene la empresa
+                    const bootcamp = await getBootcamp(userInformation.uid);
 
-                // Seteamos la lista de bootcamp para hacer un re-render este componente
-                setListBootcamp(bootcamp);
+                    // Seteamos la lista de bootcamp para hacer un re-render este componente
+                    setListInformation(bootcamp);
+                }
+                else {
+                    const subscription = await getSubscription(userInformation.uid, false);
+
+                    setListInformation(subscription);
+                }
             }
         })();
         // [userData] significa que cada vez que el state 'userData' cambie, se refresca este useEffect
@@ -78,24 +61,20 @@ const Enterprise = () => {
                 handleReject={handleReject}
                 handleAccept={handleAccept}
                 handleClose={handleClose}
-                title="Inscribirse al bootcamp"
-                text="¿ Quieres inscribirte ?"
+                title="Cancelar inscripcion al bootcamp"
+                text="¿ Quieres cancelar tu inscripcion ?"
             />
-            <Paper elevation={8} sx={{ p: 4 }}>
-                {
-                    listBootcamp.map(bootcamp => {
-                        return (
-                            <TextArea
-                                key={bootcamp}
-                                title={userInformation.usuario}
-                                subtitle={userInformation.descripcion}
-                                enterprise={userInformation.type}
-                                btnText="Cancelar"
-                            />
-                        )
-                    })
-                }
-            </Paper>
+            {
+                listInformation.map(bootcamp =>
+                (<TextArea
+                    key={bootcamp}
+                    title={userInformation.usuario}
+                    subtitle={userInformation.descripcion}
+                    enterprise={userInformation.type}
+                    handleOpen={handleOpen}
+                    btnText="Cancelar"
+                />))
+            }
         </Container>
     )
 }

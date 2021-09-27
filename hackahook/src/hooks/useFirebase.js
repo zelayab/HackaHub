@@ -97,8 +97,7 @@ const useFirebase = () => {
       //       "users": {
       //           credentials.user.uid: {
       //               "email": "josueemanuelalonso@gmail.com",
-      //                "firstName": "Josue",
-      //                "lastName": "Alonso",
+      //                blabla...
       //                "createdAt": "2021-09-25T23:45:41.306Z"
       //           }
       //       }
@@ -107,8 +106,6 @@ const useFirebase = () => {
       const usersCol = doc(db, "users", credentials.user.uid);
 
       // Creamos y colocamos contenido con la referencia creada
-      console.log("asdsdasdasda");
-      console.log({ ...datos, createdAt: new Date().toISOString() });
       await setDoc(usersCol, { ...datos, createdAt: new Date().toISOString() });
 
       // Enviar verificación al email
