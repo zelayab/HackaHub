@@ -13,42 +13,35 @@ const Home = () => {
     const { userData, userInformation, getBootcamp, getUserInformation } = useContext(authContext);
     const [listInformation, setListInformation] = useState([]);
 
-    console.log("--------------------");
-    console.log(listInformation);
+    // console.log("--------------------");
+    // console.log(listInformation);
 
     useEffect(() => {
-        (async () => {
+        const getBootcamps = async () => {
+            let bootcampResult = [];
+
             if (userData.logged) {
                 // Obtenemos TODAS las bootcamp
                 const bootcamp = await getBootcamp(userInformation.uid, true);
 
                 // Si nos devolvio alguna bootcamp
-                let bootcampResult = [];
-
                 for (let i = 0; i < bootcamp.length; i++) {
                     const userEnterprise = await getUserInformation(bootcamp[i].uidCreator);
                     if (userEnterprise !== 0) {
                         const enterpriseName = userEnterprise.usuario;
+
                         // Seteamos la lista de bootcamp para hacer un re-render este componente
-                        // setListInformation();
-                        bootcampResult.push({ ...bootcamp[i], enterpriseName });
-                        setListInformation(bootcampResult);
+                        bootcampResult = [...bootcampResult, { ...bootcamp[i], enterpriseName }];
                     }
                 }
 
-                // bootcampArray.forEach(async (bootcamp) => {
-                //     const userEnterprise = await getUserInformation(bootcamp.uidCreator);
-                //     if (userEnterprise !== 0) {
-                //         const enterpriseName = userEnterprise.usuario;
-                //         // Seteamos la lista de bootcamp para hacer un re-render este componente
-                //         // setListInformation();
-                //         console.log(bootcamp);
-                //         bootcampResult.push({ ...bootcamp, enterpriseName });
-                //         setListInformation(bootcampResult);
-                //     }
-                // })
             }
-        })();
+
+            setListInformation(bootcampResult);
+        };
+
+        getBootcamps();
+
         // [userData] significa que cada vez que el state 'userData' cambie, se refresca este useEffect
         // Esto es porque al principio userData contiene un logged false, y al cambiar a true ejecutamos el que si va
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,7 +70,8 @@ const Home = () => {
     }
 
     return (
-        <Container fullWidth="xs">
+        // fullWidth="xs"
+        <Container >
             {userInformation.type ?
                 <></>
                 :
