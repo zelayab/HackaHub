@@ -88,7 +88,7 @@ export default function TextArea(props) {
                         {props.subtitle}
                     </Typography>
                     {
-                        props.enterprise ? <></>
+                        (props.enterprise || props.isSuscribed !== undefined ) ? <></>
                             :
                             <Button onClick={() => props.handleOpen(props.index)} size="small" variant="contained" endIcon={<SendIcon />}>
                                 {props.btnText}
