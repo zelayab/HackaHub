@@ -88,11 +88,7 @@ const Register = () => {
     };
 
     return (
-<<<<<<< HEAD
         <Container maxWidth="sm">
-=======
-        <Container maxWidth="xs">
->>>>>>> feature-userdata
             <Box fullWidth sx={{
                 marginTop: 10,
                 display: 'flex',
@@ -116,15 +112,42 @@ const Register = () => {
 
                 {/* Registro */}
                 <Box component="form" noValidate onSubmit={handleSubmit} >
-<<<<<<< HEAD
                     <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <TextField
+                                select
+                                label="Tipo de Cuenta"
+                                fullWidth
+                                value={accountType ? true : false}
+                                onChange={handleChange}
+                                helperText="Selecciona el tipo de usuario"
+                            >
+                                {
+                                    typeOptions.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))
+                                }
+                            </TextField>
+                        </Grid>
                         <Grid item xs={12} sm={6}>
+                            <TextField
+                                margin="normal"
+                                type="email"
+                                fullWidth
+                                label="Email"
+                                inputRef={emailRef}
+                            />
+                        </Grid>
+
+                        <Grid item xs={12}>
                             <TextField
                                 margin="normal"
                                 type="text"
                                 fullWidth
-                                label="Email"
-                                inputRef={emailRef}
+                                label="Usuario"
+                                inputRef={usuarioRef}
                             />
                         </Grid>
 
@@ -161,131 +184,40 @@ const Register = () => {
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 margin="normal"
-                                type="text"
+                                type="password"
                                 fullWidth
                                 label="Contraseña"
                                 inputRef={passwordRef}
                             />
-                         </Grid>
+                        </Grid>
 
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 margin="normal"
-                                type="text"
+                                type="password"
                                 fullWidth
                                 label="Repita la Contraseña"
                                 inputRef={repPasswordRef}
                             />
                         </Grid>
 
-                            <TextField
-                                margin="normal"
-                                type="text"
-                                fullWidth
-                                label="Ingrese una breve descripción"
-                                inputRef={descripcionRef}
-                            />
+                        <TextField
+                            margin="normal"
+                            type="text"
+                            fullWidth
+                            label="Ingrese una breve descripción"
+                            inputRef={descripcionRef}
+                        />
 
-                            <Button
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 2, mb: 2 }}
-                            >
-                                Registrarse
-                            </Button>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 2, mb: 2 }}
+                        >
+                            Registrarse
+                        </Button>
                     </Grid>
-
-=======
-                    <TextField
-                        select
-                        label="Tipo de Cuenta"
-                        fullWidth
-                        value={accountType ? true : false}
-                        onChange={handleChange}
-                        helperText="Selecciona el tipo de usuario"
-                    >
-                        {
-                            typeOptions.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))
-                        }
-                    </TextField>
-                    <TextField
-                        margin="normal"
-                        type="email"
-                        fullWidth
-                        label="Email"
-                        inputRef={emailRef}
-                    />
-
-                    <TextField
-                        margin="normal"
-                        type="text"
-                        fullWidth
-                        label="Usuario"
-                        inputRef={usuarioRef}
-                    />
-
-                    <TextField
-                        margin="normal"
-                        type="text"
-                        fullWidth
-                        label="Linkedin"
-                        inputRef={linkedinRef}
-                    />
-
-                    <TextField
-                        margin="normal"
-                        type="text"
-                        fullWidth
-                        label="País"
-                        inputRef={paisRef}
-                    />
-
-                    <TextField
-                        margin="normal"
-                        type="text"
-                        fullWidth
-                        label="Repositorio"
-                        inputRef={repositorioRef}
-                    />
-
-                    <TextField
-                        margin="normal"
-                        type="password"
-                        fullWidth
-                        label="Contraseña"
-                        inputRef={passwordRef}
-                    />
-
-                    <TextField
-                        margin="normal"
-                        type="password"
-                        fullWidth
-                        label="Repita la Contraseña"
-                        inputRef={repPasswordRef}
-                    />
-
-                    <TextField
-                        margin="normal"
-                        type="text"
-                        fullWidth
-                        label="Ingrese una breve descripción"
-                        inputRef={descripcionRef}
-                    />
-
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 2, mb: 2 }}
-                    >
-                        Registrarse
-                    </Button>
->>>>>>> feature-userdata
                 </Box>
             </Box>
         </Container>
