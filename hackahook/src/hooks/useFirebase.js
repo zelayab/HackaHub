@@ -31,14 +31,13 @@ const firebaseConfig = {
 };
 
 const useFirebase = () => {
-  // Firebase Initialize
   initializeApp(firebaseConfig); // Firebase
   const db = getFirestore(); // Firestore
 
   const auth = getAuth(); // Firebase/auth
 
   const [userData, setUserData] = useState({
-    loading: true, // Verificar si esta en proceso de autentificado (fetching)
+    loading: true, // Verificar si esta en proceso de autentificado (fetching)a
     logged: false, // Verificar si esta logueado
     emailVerified: false, // Verificar si verifico el email
   });
