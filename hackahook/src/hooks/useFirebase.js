@@ -48,6 +48,7 @@ const useFirebase = () => {
     });
 
     return () => unsubscribe();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Loguear un usuario
@@ -81,6 +82,7 @@ const useFirebase = () => {
   const userRegister = async (
     email,
     usuario,
+    type,
     linkedin,
     pais,
     repositorio,
@@ -114,6 +116,7 @@ const useFirebase = () => {
       await setDoc(usersCol, {
         email: credentials.user.email,
         usuario,
+        type,
         linkedin,
         pais,
         repositorio,

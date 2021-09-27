@@ -1,11 +1,24 @@
 import { useContext, useState, useRef } from 'react';
 
-import { Container, Box, Avatar, Typography, Grid, TextField, Button, Alert } from '@mui/material';
+import { Container, Box, Avatar, Typography, TextField, Button, Alert, MenuItem } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { authContext } from '../context/appContext';
 
+const typeOptions = [
+    {
+        value: false,
+        label: 'Usuario'
+    },
+    {
+        value: true,
+        label: 'Empresa'
+    }
+]
+
 const Register = () => {
+    const [accountType, setAccountType] = useState(false);
+
     const emailRef = useRef('');
     const usuarioRef = useRef('');
     const linkedinRef = useRef('');
@@ -23,6 +36,7 @@ const Register = () => {
         },
         email: { error: false },
         usuario: { error: false },
+        type: { error: false },
         linkedin: { error: false },
         pais: { error: false },
         repositorio: { error: false },
@@ -38,6 +52,7 @@ const Register = () => {
 
         const email = emailRef.current.value;
         const usuario = usuarioRef.current.value;
+        const type = accountType;
         const linkedin = linkedinRef.current.value;
         const pais = paisRef.current.value;
         const repositorio = repositorioRef.current.value;
@@ -45,7 +60,7 @@ const Register = () => {
         const repPassword = repPasswordRef.current.value;
         const descripcion = descripcionRef.current.value;
 
-        userRegister(email, usuario, linkedin, pais, repositorio, password, repPassword, descripcion)
+        userRegister(email, usuario, type, linkedin, pais, repositorio, password, repPassword, descripcion)
             .then(data => {
                 console.log(data);
                 if (data.error) {
@@ -66,8 +81,18 @@ const Register = () => {
             });
     }
 
+    const handleChange = (event) => {
+        setAccountType(event.target.value);
+
+        console.log(event.target.value);
+    };
+
     return (
+<<<<<<< HEAD
         <Container maxWidth="sm">
+=======
+        <Container maxWidth="xs">
+>>>>>>> feature-userdata
             <Box fullWidth sx={{
                 marginTop: 10,
                 display: 'flex',
@@ -91,6 +116,7 @@ const Register = () => {
 
                 {/* Registro */}
                 <Box component="form" noValidate onSubmit={handleSubmit} >
+<<<<<<< HEAD
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
@@ -170,6 +196,96 @@ const Register = () => {
                             </Button>
                     </Grid>
 
+=======
+                    <TextField
+                        select
+                        label="Tipo de Cuenta"
+                        fullWidth
+                        value={accountType ? true : false}
+                        onChange={handleChange}
+                        helperText="Selecciona el tipo de usuario"
+                    >
+                        {
+                            typeOptions.map((option) => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))
+                        }
+                    </TextField>
+                    <TextField
+                        margin="normal"
+                        type="email"
+                        fullWidth
+                        label="Email"
+                        inputRef={emailRef}
+                    />
+
+                    <TextField
+                        margin="normal"
+                        type="text"
+                        fullWidth
+                        label="Usuario"
+                        inputRef={usuarioRef}
+                    />
+
+                    <TextField
+                        margin="normal"
+                        type="text"
+                        fullWidth
+                        label="Linkedin"
+                        inputRef={linkedinRef}
+                    />
+
+                    <TextField
+                        margin="normal"
+                        type="text"
+                        fullWidth
+                        label="País"
+                        inputRef={paisRef}
+                    />
+
+                    <TextField
+                        margin="normal"
+                        type="text"
+                        fullWidth
+                        label="Repositorio"
+                        inputRef={repositorioRef}
+                    />
+
+                    <TextField
+                        margin="normal"
+                        type="password"
+                        fullWidth
+                        label="Contraseña"
+                        inputRef={passwordRef}
+                    />
+
+                    <TextField
+                        margin="normal"
+                        type="password"
+                        fullWidth
+                        label="Repita la Contraseña"
+                        inputRef={repPasswordRef}
+                    />
+
+                    <TextField
+                        margin="normal"
+                        type="text"
+                        fullWidth
+                        label="Ingrese una breve descripción"
+                        inputRef={descripcionRef}
+                    />
+
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        sx={{ mt: 2, mb: 2 }}
+                    >
+                        Registrarse
+                    </Button>
+>>>>>>> feature-userdata
                 </Box>
             </Box>
         </Container>

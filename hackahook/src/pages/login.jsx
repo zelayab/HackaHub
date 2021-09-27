@@ -1,5 +1,4 @@
 import { useContext, useState, useRef } from "react";
-import { Redirect } from 'react-router-dom';
 
 import { Container, Box, Avatar, Typography, Grid, TextField, Button, Alert } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -87,7 +86,7 @@ const Login = () => {
                     }
                     else {
                         // Logueado correctamente
-                        setUserData({...userData, emailVerified: userData.emailVerified});
+                        setUserData({ ...userData, emailVerified: userData.emailVerified });
                     }
                 });
         }
