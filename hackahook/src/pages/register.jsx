@@ -64,7 +64,7 @@ const Register = () => {
     }
 
     return (
-        <Container fullWidth="xs">
+        <Container maxWidth="sm">
             <Box fullWidth sx={{
                 marginTop: 10,
                 display: 'flex',
@@ -88,70 +88,84 @@ const Register = () => {
 
                 {/* Registro */}
                 <Box component="form" noValidate onSubmit={handleSubmit} >
-                    <TextField
-                        margin="normal"
-                        type="text"
-                        fullWidth
-                        label="Email"
-                        inputRef={emailRef}
-                    />
+                    <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                margin="normal"
+                                type="text"
+                                fullWidth
+                                label="Email"
+                                inputRef={emailRef}
+                            />
+                        </Grid>
 
-                    <TextField
-                        margin="normal"
-                        type="text"
-                        fullWidth
-                        label="Linkedin"
-                        inputRef={linkedinRef}
-                    />
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                margin="normal"
+                                type="text"
+                                fullWidth
+                                label="Linkedin"
+                                inputRef={linkedinRef}
+                            />
+                        </Grid>
 
-                    <TextField
-                        margin="normal"
-                        type="text"
-                        fullWidth
-                        label="País"
-                        inputRef={paisRef}
-                    />
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                margin="normal"
+                                type="text"
+                                fullWidth
+                                label="País"
+                                inputRef={paisRef}
+                            />
+                        </Grid>
 
-                    <TextField
-                        margin="normal"
-                        type="text"
-                        fullWidth
-                        label="Repositorio"
-                        inputRef={repositorioRef}
-                    />
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                margin="normal"
+                                type="text"
+                                fullWidth
+                                label="Repositorio"
+                                inputRef={repositorioRef}
+                            />
+                        </Grid>
 
-                    <TextField
-                        margin="normal"
-                        type="text"
-                        fullWidth
-                        label="Contraseña"
-                        inputRef={passwordRef}
-                    />
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                margin="normal"
+                                type="text"
+                                fullWidth
+                                label="Contraseña"
+                                inputRef={passwordRef}
+                            />
+                         </Grid>
 
-                    <TextField
-                        margin="normal"
-                        type="text"
-                        fullWidth
-                        label="Repita la Contraseña"
-                        inputRef={repPasswordRef}
-                    />
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                margin="normal"
+                                type="text"
+                                fullWidth
+                                label="Repita la Contraseña"
+                                inputRef={repPasswordRef}
+                            />
+                        </Grid>
 
-                    <TextField
-                        margin="normal"
-                        type="text"
-                        fullWidth
-                        label="Ingrese una breve descripción"
-                        inputRef={descripcionRef}
-                    />
+                            <TextField
+                                margin="normal"
+                                type="text"
+                                fullWidth
+                                label="Ingrese una breve descripción"
+                                inputRef={descripcionRef}
+                            />
 
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 2, mb: 2 }}
-                    >
-                        Registrarse
-                    </Button>
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 2, mb: 2 }}
+                            >
+                                Registrarse
+                            </Button>
+                    </Grid>
                 </Box>
             </Box>
         </Container>
