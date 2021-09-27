@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with: [Firebase],[MaterialUI],[CreateReactApp]
+This project was created with: [Firebase],[MaterialUI],[CreateReactApp]
 
 ## This project
 
@@ -9,7 +9,7 @@ The design is created with materialUI.
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
