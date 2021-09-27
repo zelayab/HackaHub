@@ -1,6 +1,6 @@
 import { useContext, useState, useRef } from 'react';
 
-import { Container, Box, Avatar, Typography, TextField, Button, Alert, MenuItem } from '@mui/material';
+import { Container, Box, Avatar, Typography, TextField, Button, Grid, Alert, MenuItem } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { authContext } from '../context/appContext';
@@ -24,6 +24,7 @@ const Register = () => {
     const linkedinRef = useRef('');
     const paisRef = useRef('');
     const repositorioRef = useRef('');
+    const urlEmpresaRef = useRef('');
     const passwordRef = useRef('');
     const repPasswordRef = useRef('');
     const descripcionRef = useRef('');
@@ -40,6 +41,7 @@ const Register = () => {
         linkedin: { error: false },
         pais: { error: false },
         repositorio: { error: false },
+        urlEmpresa: { error: false },
         password: { error: false, },
         repPassword: { error: false },
         descripcion: { error: false },
@@ -56,11 +58,25 @@ const Register = () => {
         const linkedin = linkedinRef.current.value;
         const pais = paisRef.current.value;
         const repositorio = repositorioRef.current.value;
+        const urlEmpresa = urlEmpresaRef.current.value;
         const password = passwordRef.current.value;
         const repPassword = repPasswordRef.current.value;
         const descripcion = descripcionRef.current.value;
 
-        userRegister(email, usuario, type, linkedin, pais, repositorio, password, repPassword, descripcion)
+        let parametros = {
+            email,
+            usuario,
+            type,
+            linkedin,
+            pais,
+            password,
+            repPassword,
+            descripcion
+        }
+
+        parametros[(accountType ? "urlEmpresa" : "repositorio")] = accountType ? urlEmpresa : repositorio;
+
+        userRegister(parametros)
             .then(data => {
                 console.log(data);
                 if (data.error) {
@@ -111,7 +127,10 @@ const Register = () => {
                 }
 
                 {/* Registro */}
-                <Box component="form" noValidate onSubmit={handleSubmit} >
+                <Box component="form" noValidate onSubmit={handleSubmit}
+                    sx={{
+                        mt: 4
+                    }}>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
@@ -120,7 +139,6 @@ const Register = () => {
                                 fullWidth
                                 value={accountType ? true : false}
                                 onChange={handleChange}
-                                helperText="Selecciona el tipo de usuario"
                             >
                                 {
                                     typeOptions.map((option) => (
@@ -141,7 +159,7 @@ const Register = () => {
                             />
                         </Grid>
 
-                        <Grid item xs={12}>
+                        <Grid item xs={12} sm={6}>
                             <TextField
                                 margin="normal"
                                 type="text"
@@ -171,14 +189,26 @@ const Register = () => {
                             />
                         </Grid>
 
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                margin="normal"
-                                type="text"
-                                fullWidth
-                                label="Repositorio"
-                                inputRef={repositorioRef}
-                            />
+                        <Grid item xs={12}>
+                            {
+                                accountType ?
+                                    <TextField
+                                        margin="normal"
+                                        type="text"
+                                        fullWidth
+                                        label="Link de empresa"
+                                        inputRef={urlEmpresaRef}
+                                    />
+                                    :
+                                    <TextField
+                                        margin="normal"
+                                        type="text"
+                                        fullWidth
+                                        label="Repositorio"
+                                        inputRef={repositorioRef}
+                                    />
+                            }
+
                         </Grid>
 
                         <Grid item xs={12} sm={6}>
@@ -201,22 +231,25 @@ const Register = () => {
                             />
                         </Grid>
 
-                        <TextField
-                            margin="normal"
-                            type="text"
-                            fullWidth
-                            label="Ingrese una breve descripción"
-                            inputRef={descripcionRef}
-                        />
+                        <Grid item xs={12}>
+                            <TextField
+                                label="Descripcion"
+                                multiline
+                                fullWidth
+                                rows={3}
+                                inputRef={descripcionRef}
+                            />
+                            <Button
+                                type="submit"
+                                fullWidth
+                                variant="contained"
+                                sx={{ mt: 2, mb: 2 }}
+                            >
+                                Registrarse
+                            </Button>
+                        </Grid>
 
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            sx={{ mt: 2, mb: 2 }}
-                        >
-                            Registrarse
-                        </Button>
+
                     </Grid>
                 </Box>
             </Box>

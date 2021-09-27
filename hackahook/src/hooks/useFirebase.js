@@ -12,13 +12,22 @@ import {
   sendPasswordResetEmail,
 } from "firebase/auth";
 
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAXz6FJnbXc6IyXxBlU2w_86cVAxD5-yik",
+//   authDomain: "hackahub-8978e.firebaseapp.com",
+//   projectId: "hackahub-8978e",
+//   storageBucket: "hackahub-8978e.appspot.com",
+//   messagingSenderId: "986160142604",
+//   appId: "1:986160142604:web:82daccc556049b46dd5129",
+// };
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAXz6FJnbXc6IyXxBlU2w_86cVAxD5-yik",
-  authDomain: "hackahub-8978e.firebaseapp.com",
-  projectId: "hackahub-8978e",
-  storageBucket: "hackahub-8978e.appspot.com",
-  messagingSenderId: "986160142604",
-  appId: "1:986160142604:web:82daccc556049b46dd5129",
+  apiKey: "AIzaSyCW4ygATsUJy4Wrq6pMOrCs7WZV3LjbejM",
+  authDomain: "test-ad309.firebaseapp.com",
+  projectId: "test-ad309",
+  storageBucket: "test-ad309.appspot.com",
+  messagingSenderId: "608444313408",
+  appId: "1:608444313408:web:ed4623ed99c4f2aa1ad4a5",
 };
 
 const useFirebase = () => {
@@ -80,22 +89,23 @@ const useFirebase = () => {
 
   // Registrar un usuario
   const userRegister = async (
-    email,
-    usuario,
-    type,
-    linkedin,
-    pais,
-    repositorio,
-    password,
-    repPassword,
-    descripcion
+    datos
+    // email,
+    // usuario,
+    // type,
+    // linkedin,
+    // pais,
+    // repositorio,
+    // password,
+    // repPassword,
+    // descripcion
   ) => {
     try {
       // Registrar al usuario, en caso de error(ya existir) salta al catch
       const credentials = await createUserWithEmailAndPassword(
         auth,
-        email,
-        password
+        datos.email,
+        datos.password
       );
 
       // Referenciamos (ejemplo de como quedaria)
@@ -113,18 +123,7 @@ const useFirebase = () => {
       const usersCol = doc(db, "users", credentials.user.uid);
 
       // Creamos y colocamos contenido con la referencia creada
-      await setDoc(usersCol, {
-        email: credentials.user.email,
-        usuario,
-        type,
-        linkedin,
-        pais,
-        repositorio,
-        password,
-        repPassword,
-        descripcion,
-        createdAt: new Date().toISOString(),
-      });
+      await setDoc(usersCol, { ...datos, createdAt: new Date().toISOString() });
 
       // Enviar verificación al email
       await sendEmailVerification(auth.currentUser);
