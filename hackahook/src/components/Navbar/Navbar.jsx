@@ -42,9 +42,14 @@ const Navbar = (props) => {
             <AppBar position="static">
                 <Toolbar>
                     {/* Brand */}
-                    <Typography onClick={() => history.push('/')} component="div" variant="h6" sx={{ flexGrow: 1 }}>
-                        HackaJob
-                    </Typography>
+                    <Link 
+                        color="inherit" 
+                        href="/home" 
+                        variant="h5" 
+                        sx={{ flexGrow: 1, textDecoration:'none' }}
+                    >      
+                        HackaJob 
+                    </Link>
 
                     {/* Right Buttons*/}
                     {
