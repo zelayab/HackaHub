@@ -108,6 +108,8 @@ const useFirebase = () => {
       const usersCol = doc(db, "users", credentials.user.uid);
 
       // Creamos y colocamos contenido con la referencia creada
+      console.log("asdsdasdasda");
+      console.log({ ...datos, createdAt: new Date().toISOString() });
       await setDoc(usersCol, { ...datos, createdAt: new Date().toISOString() });
 
       // Enviar verificación al email

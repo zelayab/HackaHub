@@ -57,8 +57,6 @@ const Register = () => {
         const type = accountType;
         const linkedin = linkedinRef.current.value;
         const pais = paisRef.current.value;
-        const repositorio = repositorioRef.current.value;
-        const urlEmpresa = urlEmpresaRef.current.value;
         const password = passwordRef.current.value;
         const repPassword = repPasswordRef.current.value;
         const descripcion = descripcionRef.current.value;
@@ -74,7 +72,7 @@ const Register = () => {
             descripcion
         }
 
-        parametros[(accountType ? "urlEmpresa" : "repositorio")] = accountType ? urlEmpresa : repositorio;
+        parametros[(accountType ? "urlEmpresa" : "repositorio")] = accountType ? urlEmpresaRef.current.value : repositorioRef.current.value;
 
         userRegister(parametros)
             .then(data => {

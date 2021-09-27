@@ -1,9 +1,10 @@
 // feed de Home enterprise con el modal new Bootcamp en el navbar
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import { Container } from "@mui/material"
 import TextArea from "../components/TextArea/TextArea"
+import AlertDialog from "../components/Dialog/Dialog";
 
 import { authContext } from "../context/appContext";
 
@@ -34,16 +35,55 @@ const jsonData = [
 const Home = () => {
     const { userInformation } = useContext(authContext);
 
+    const [open, setOpen] = useState(false);
+    const [lastIndex, setLastIndex] = useState(null);
+
+    const handleOpen = (index) => {
+        setOpen(true);
+        setLastIndex(index);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const handleReject = () => {
+        console.log("reject: " + lastIndex);
+        setOpen(false);
+    }
+
+    const handleAccept = () => {
+        console.log("accept: " + lastIndex);
+        setOpen(false);
+    }
+
+    console.log(userInformation);
+
     return (
-        <Container container fullWidth="xs">
+        <Container fullWidth="xs">
+            {userInformation.type ?
+                <></>
+            :
+             <AlertDialog 
+                open={open} 
+                handleReject={handleReject}
+                handleAccept={handleAccept}
+                handleClose={handleClose}
+                title="Inscribirse al bootcamp"
+                text="¿ Quieres inscribirte ?"
+                /> 
+            }
+                
             {
-                jsonData.map(data => {
+                jsonData.map((data, index) => {
                     return (
                         <TextArea
-                            key={data}
+                            key={index}
+                            index={index}
                             title={data.usuario}
                             subtitle={data.descripcion}
                             enterprise={userInformation.type}
+                            handleOpen={handleOpen}
                             btnText="Inscribirse"
                         />
                     )

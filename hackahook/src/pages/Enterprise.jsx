@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Container } from "@mui/material"
 import TextArea from "../components/TextArea/TextArea"
 import Paper from '@mui/material/Paper';
+import AlertDialog from "../components/Dialog/Dialog";
 import { authContext } from "../context/appContext";
 
 // const jsonData = [
@@ -48,8 +49,38 @@ const Enterprise = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [userData]);
 
+    const [open, setOpen] = useState(false);
+    const [lastIndex, setLastIndex] = useState(null);
+
+    const handleOpen = (index) => {
+        setOpen(true);
+        setLastIndex(index);
+    }
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const handleReject = () => {
+        console.log("reject: " + lastIndex);
+        setOpen(false);
+    }
+
+    const handleAccept = () => {
+        console.log("accept: " + lastIndex);
+        setOpen(false);
+    }
+
     return (
         <Container maxWidth="xs">
+             <AlertDialog 
+                open={open} 
+                handleReject={handleReject}
+                handleAccept={handleAccept}
+                handleClose={handleClose}
+                title="Inscribirse al bootcamp"
+                text="¿ Quieres inscribirte ?"
+            />
             <Paper elevation={8} sx={{ p: 4 }}>
                 {
                     listBootcamp.map(bootcamp => {
@@ -68,6 +99,5 @@ const Enterprise = () => {
         </Container>
     )
 }
-
 
 export default Enterprise;

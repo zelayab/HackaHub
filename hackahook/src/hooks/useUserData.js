@@ -22,7 +22,7 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
         setUserInformation({ ...response, uid });
       }
     })();
-  }, []);
+  }, [userData]);
 
   const getUserInformation = async (uid) => {
     // Armamos la referencia collection "users", del documento "uid"

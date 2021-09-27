@@ -89,7 +89,7 @@ const [anchorEl, setAnchorEl] = useState(null);
                 {
                     props.enterprise ? <></> 
                     :
-                    <Button size="small" variant="contained" endIcon={<SendIcon />}>
+                    <Button onClick={() => props.handleOpen(props.index)} size="small" variant="contained" endIcon={<SendIcon />}>
                         {props.btnText}
                     </Button>
                 }
