@@ -5,7 +5,30 @@ import TextArea from "../components/TextArea/TextArea"
 import Paper from '@mui/material/Paper';
 import { authContext } from "../context/appContext";
 
+// const jsonData = [
+//     {
+//         usuario: 'Empresa 1',
+//         descripcion: 'Esta es una descripcion'
+//     },
+//     {
+//         usuario: 'Empresa 2',
+//         descripcion: 'Esta es una descripcion'
+//     },
+//     {
+//         usuario: 'Empresa 3',
+//         descripcion: 'Esta es una sdescripcion'
+//     },
+//     {
+//         usuario: 'Empresa 4',
+//         descripcion: 'Esta es una ddescripcion'
+//     },
+//     {
+//         usuario: 'Empresa 5',
+//         descripcion: 'Esta es una adescripcion'
+//     }
+// ]
 
+// Seccion que muestra las bootcamps que tiene una empresa
 const Enterprise = () => {
     const { userData, getBootcamp, userInformation } = useContext(authContext);
     const [listBootcamp, setListBootcamp] = useState([]);
@@ -30,7 +53,15 @@ const Enterprise = () => {
             <Paper elevation={8} sx={{ p: 4 }}>
                 {
                     listBootcamp.map(bootcamp => {
-                        return <TextArea key={bootcamp} title={userInformation.usuario} subtitle={userInformation.descripcion} />
+                        return (
+                            <TextArea
+                                key={bootcamp}
+                                title={userInformation.usuario}
+                                subtitle={userInformation.descripcion}
+                                enterprise={userInformation.type}
+                                btnText="Cancelar"
+                            />
+                        )
                     })
                 }
             </Paper>

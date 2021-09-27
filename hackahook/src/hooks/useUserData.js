@@ -18,6 +18,7 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
       if (userData.logged) {
         const uid = getCurrentAuth().currentUser.uid;
         const response = await getUserInformation(uid);
+
         setUserInformation({ ...response, uid });
       }
     })();
@@ -62,7 +63,7 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
   const postBootcamp = async (uidCreator, description) => {
     // addDoc ya adhiere un uid aleatorio de documento
     // Obtenemos la collection bootcamps y posteamos con los datos del parametro
-    const bootRef = await addDoc(collection(db, "bootcamps"), {
+    await addDoc(collection(db, "bootcamps"), {
       uidCreator,
       // title,
       description,

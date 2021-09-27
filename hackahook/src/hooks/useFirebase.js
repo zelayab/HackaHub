@@ -81,7 +81,8 @@ const useFirebase = () => {
   // Registrar un usuario
   const userRegister = async (
     email,
-    user,
+    usuario,
+    type,
     linkedin,
     pais,
     repositorio,
@@ -114,7 +115,8 @@ const useFirebase = () => {
       // Creamos y colocamos contenido con la referencia creada
       await setDoc(usersCol, {
         email: credentials.user.email,
-        user,
+        usuario,
+        type,
         linkedin,
         pais,
         repositorio,

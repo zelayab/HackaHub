@@ -12,6 +12,7 @@ import { Button, useMediaQuery } from '@mui/material';
 import { authContext } from './context/appContext';
 
 import Navbar from './components/Navbar/Navbar';
+import Home from './pages/Home';
 
 const ComponenteHome = () => {
     // const { getDb, getCurrentAuth, getUserInformation, getBootcamp, userInformation } = useContext(authContext);
@@ -48,36 +49,26 @@ const App = () => {
             <Navbar isMobile={isMobile} />
             <Switch>
                 <Route exact path="/"
-                    render={() => checkIfRequireAuth(true, ComponenteHome)} />
+                    render={() => checkIfRequireAuth(true, Home)} />
 
                 <Route path="/home"
-                    render={() => checkIfRequireAuth(true, ComponenteHome)} />
+                    render={() => checkIfRequireAuth(true, Home)} />
 
                 <Route path="/login"
                     render={() => checkIfRequireAuth(false, Login)} />
                 <Route path="/register"
                     render={() => checkIfRequireAuth(false, Register)} />
-                {/* <Route exact path="/"
-                    render={() => protectedPath(ComponenteHome)} />
-
-                <Route path="/home"
-                    render={() => protectedPath(ComponenteHome)} />
-
-                <Route path="/login"
-                    render={() => requireAuth(Login)} />
-                <Route path="/register"
-                    render={() => requireAuth(Register)} /> */}
 
                 <Route path="/mybootcamp"
-                    render={() => <Enterprise />} />
+                    render={() => checkIfRequireAuth(true, Enterprise)} />
                 <Route path="/subscriptions"
                     render={() => <span>suscriptions</span>} />
 
                 <Route path="*">
                     <span>404 - Not Found</span>
                 </Route>
-            </Switch>
-        </Router>
+            </Switch >
+        </Router >
     );
 }
 

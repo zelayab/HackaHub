@@ -1,13 +1,26 @@
 import { useContext, useState, useRef } from 'react';
 
-import { Container, Box, Avatar, Typography, TextField, Button, Alert } from '@mui/material';
+import { Container, Box, Avatar, Typography, TextField, Button, Alert, MenuItem } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { authContext } from '../context/appContext';
 
+const typeOptions = [
+    {
+        value: false,
+        label: 'Usuario'
+    },
+    {
+        value: true,
+        label: 'Empresa'
+    }
+]
+
 const Register = () => {
+    const [accountType, setAccountType] = useState(false);
+
     const emailRef = useRef('');
-    const userRef = useRef('');
+    const usuarioRef = useRef('');
     const linkedinRef = useRef('');
     const paisRef = useRef('');
     const repositorioRef = useRef('');
@@ -22,7 +35,8 @@ const Register = () => {
             message: '',
         },
         email: { error: false },
-        user: { error: false },
+        usuario: { error: false },
+        type: { error: false },
         linkedin: { error: false },
         pais: { error: false },
         repositorio: { error: false },
@@ -37,7 +51,8 @@ const Register = () => {
         e.preventDefault();
 
         const email = emailRef.current.value;
-        const user = userRef.current.value;
+        const usuario = usuarioRef.current.value;
+        const type = accountType;
         const linkedin = linkedinRef.current.value;
         const pais = paisRef.current.value;
         const repositorio = repositorioRef.current.value;
@@ -45,7 +60,7 @@ const Register = () => {
         const repPassword = repPasswordRef.current.value;
         const descripcion = descripcionRef.current.value;
 
-        userRegister(email, user, linkedin, pais, repositorio, password, repPassword, descripcion)
+        userRegister(email, usuario, type, linkedin, pais, repositorio, password, repPassword, descripcion)
             .then(data => {
                 console.log(data);
                 if (data.error) {
@@ -66,8 +81,14 @@ const Register = () => {
             });
     }
 
+    const handleChange = (event) => {
+        setAccountType(event.target.value);
+
+        console.log(event.target.value);
+    };
+
     return (
-        <Container fullWidth="xs">
+        <Container maxWidth="xs">
             <Box fullWidth sx={{
                 marginTop: 10,
                 display: 'flex',
@@ -92,8 +113,24 @@ const Register = () => {
                 {/* Registro */}
                 <Box component="form" noValidate onSubmit={handleSubmit} >
                     <TextField
+                        select
+                        label="Tipo de Cuenta"
+                        fullWidth
+                        value={accountType ? true : false}
+                        onChange={handleChange}
+                        helperText="Selecciona el tipo de usuario"
+                    >
+                        {
+                            typeOptions.map((option) => (
+                                <MenuItem key={option.value} value={option.value}>
+                                    {option.label}
+                                </MenuItem>
+                            ))
+                        }
+                    </TextField>
+                    <TextField
                         margin="normal"
-                        type="text"
+                        type="email"
                         fullWidth
                         label="Email"
                         inputRef={emailRef}
@@ -104,7 +141,7 @@ const Register = () => {
                         type="text"
                         fullWidth
                         label="Usuario"
-                        inputRef={userRef}
+                        inputRef={usuarioRef}
                     />
 
                     <TextField
@@ -133,7 +170,7 @@ const Register = () => {
 
                     <TextField
                         margin="normal"
-                        type="text"
+                        type="password"
                         fullWidth
                         label="Contraseña"
                         inputRef={passwordRef}
@@ -141,7 +178,7 @@ const Register = () => {
 
                     <TextField
                         margin="normal"
-                        type="text"
+                        type="password"
                         fullWidth
                         label="Repita la Contraseña"
                         inputRef={repPasswordRef}
