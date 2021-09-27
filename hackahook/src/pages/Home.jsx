@@ -40,6 +40,7 @@ const Home = () => {
                 jsonData.map(data => {
                     return (
                         <TextArea
+                            key={data}
                             title={data.usuario}
                             subtitle={data.descripcion}
                             enterprise={userInformation.type}

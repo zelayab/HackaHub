@@ -49,7 +49,7 @@ const Enterprise = () => {
     }, [userData]);
 
     return (
-        <Container container fullWidth="xs">
+        <Container maxWidth="xs">
             <Paper elevation={8} sx={{ p: 4 }}>
                 {
                     listBootcamp.map(bootcamp => {

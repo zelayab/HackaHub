@@ -22,7 +22,7 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
         setUserInformation({ ...response, uid });
       }
     })();
-  });
+  }, []);
 
   const getUserInformation = async (uid) => {
     // Armamos la referencia collection "users", del documento "uid"
@@ -42,20 +42,22 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
     // Obtiene la collection de Bootcamp
     // Ya sea obtener todos los bootcamp en general para el usuario
     // Ya sea obtener todos los bootcamp de una empresa en especifico
-    const q = all
-      ? // Todos los bootcamp
-        collection(db, "bootcamps")
-      : // Filtrado por uid
-        query(collection(db, "bootcamps"), where("uidCreator", "==", uid));
+    try {
+      const q = all
+        ? // Todos los bootcamp
+          collection(db, "bootcamps")
+        : // Filtrado por uid
+          query(collection(db, "bootcamps"), where("uidCreator", "==", uid));
 
-    // Dependiendo del query, son los datos que se van a devolver
-    const querySnapshot = await getDocs(q);
+      // Dependiendo del query, son los datos que se van a devolver
+      const querySnapshot = await getDocs(q);
 
-    // Obtenemos los datos, los guardamos en un array y los retornamos
-    // En caso de no haber resultados se retorna []
-    querySnapshot.forEach((doc) => {
-      result.push(doc.data());
-    });
+      // // Obtenemos los datos, los guardamos en un array y los retornamos
+      // // En caso de no haber resultados se retorna []
+      querySnapshot.forEach((doc) => {
+        result.push(doc.data());
+      });
+    } catch (error) {}
 
     return result;
   };
@@ -77,20 +79,22 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
     // Obtenemos las subscripciones, tenemos dos tipos
     // enterprise = true, devuelve los usuarios que se inscribieron a la bootcamp (uid empresa)
     // enterprise = false, devuelve las bootcamps que se inscribio un usuario (uid usuario)
-    const q = all
-      ? // Todos los bootcamp
-        collection(db, "subscriptions")
-      : // Filtrado por uid
-        query(
-          collection(db, "subscriptions"),
-          where(enterprise ? "uidBootcamp" : "uidCreator", "==", uid)
-        );
+    try {
+      const q = all
+        ? // Todos los bootcamp
+          collection(db, "subscriptions")
+        : // Filtrado por uid
+          query(
+            collection(db, "subscriptions"),
+            where(enterprise ? "uidBootcamp" : "uidCreator", "==", uid)
+          );
 
-    const querySnapshot = await getDocs(q);
+      const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach((doc) => {
-      result.push(doc.data());
-    });
+      querySnapshot.forEach((doc) => {
+        result.push(doc.data());
+      });
+    } catch (error) {}
 
     return result;
   };

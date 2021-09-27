@@ -99,8 +99,6 @@ const Register = () => {
 
     const handleChange = (event) => {
         setAccountType(event.target.value);
-
-        console.log(event.target.value);
     };
 
     return (
@@ -248,8 +246,6 @@ const Register = () => {
                                 Registrarse
                             </Button>
                         </Grid>
-
-
                     </Grid>
                 </Box>
             </Box>

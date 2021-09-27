@@ -38,9 +38,9 @@ const useFirebase = () => {
   const auth = getAuth(); // Firebase/auth
 
   const [userData, setUserData] = useState({
-    // loading: true, // Verificar si esta en proceso de autentificado (fetching)
-    // logged: false, // Verificar si esta logueado
-    // emailVerified: false, // Verificar si verifico el email
+    loading: true, // Verificar si esta en proceso de autentificado (fetching)
+    logged: false, // Verificar si esta logueado
+    emailVerified: false, // Verificar si verifico el email
   });
 
   useEffect(() => {
