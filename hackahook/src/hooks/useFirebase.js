@@ -38,21 +38,22 @@ const useFirebase = () => {
   const auth = getAuth(); // Firebase/auth
 
   const [userData, setUserData] = useState({
-    loading: true, // Verificar si esta en proceso de autentificado (fetching)
-    logged: false, // Verificar si esta logueado
-    emailVerified: false, // Verificar si verifico el email
+    // loading: true, // Verificar si esta en proceso de autentificado (fetching)
+    // logged: false, // Verificar si esta logueado
+    // emailVerified: false, // Verificar si verifico el email
   });
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setUserData({
-          logged: true,
+          // ...userData,
           loading: false,
+          logged: true,
           emailVerified: user.emailVerified,
         });
       } else {
-        setUserData({ logged: false, loading: false, emailVerified: false });
+        setUserData({ loading: false, logged: false, emailVerified: false });
       }
     });
 
@@ -69,11 +70,6 @@ const useFirebase = () => {
         password
       );
 
-      setUserData({
-        ...userData,
-        emailVerified: credentials.user.emailVerified,
-      });
-
       return {
         error: false,
         credentials: credentials.user,
@@ -88,18 +84,7 @@ const useFirebase = () => {
   };
 
   // Registrar un usuario
-  const userRegister = async (
-    datos
-    // email,
-    // usuario,
-    // type,
-    // linkedin,
-    // pais,
-    // repositorio,
-    // password,
-    // repPassword,
-    // descripcion
-  ) => {
+  const userRegister = async (datos) => {
     try {
       // Registrar al usuario, en caso de error(ya existir) salta al catch
       const credentials = await createUserWithEmailAndPassword(

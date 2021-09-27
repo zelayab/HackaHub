@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './App.css';
 
 import { Spinner } from './components/Spinner/Spinner';
@@ -29,12 +29,14 @@ const ComponenteHome = () => {
 
 const App = () => {
     const { userData } = useContext(authContext);
+
     const isMobile = useMediaQuery('(max-width: 600px)')
 
     const checkIfRequireAuth = (requireSession, Component) => {
         if (userData.loading)
             return <Spinner />
 
+        console.log("userLogged: " + userData.logged);
         if (requireSession && !userData.logged)
             return <Redirect to="/login" />
 

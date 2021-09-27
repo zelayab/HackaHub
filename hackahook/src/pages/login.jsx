@@ -86,7 +86,6 @@ const Login = () => {
                     }
                     else {
                         // Logueado correctamente
-                        setUserData({ ...userData, emailVerified: userData.emailVerified });
                     }
                 });
         }
