@@ -27,8 +27,8 @@ class usersService {
     let result = [];
 
     // Obtiene la collection de Bootcamp
-    // Ya sea obtener todos los bootcamp en general para el usuario
-    // Ya sea obtener todos los bootcamp de una empresa en especifico
+    // Ya sea obtener todos los bootcamp en general para el usuario (all == true para ver todas las bootcamp)
+    // Ya sea obtener todos los bootcamp de una empresa en especifico (all == false para ver solo la de la empresa con uid)
     const q = all
       ? // Todos los bootcamp
         collection(db, "bootcamps")
@@ -43,7 +43,7 @@ class usersService {
     querySnapshot.forEach((doc) => {
       result.push(doc.data());
     });
-
+    
     return result;
   }
 

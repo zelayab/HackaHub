@@ -2,20 +2,24 @@ import React, { useContext, useState } from 'react';
 
 import { authContext } from '../../context/appContext';
 import { Box } from '@mui/system';
-import { AppBar, IconButton, Toolbar, Typography, Link, Drawer, ListItem, ListItemText } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu'
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import { AppBar, IconButton, Toolbar, Typography, Link, Drawer, ListItem, ListItemText  } from '@mui/material';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import MoreIcon from '@mui/icons-material/MoreVert';
 
 const Navbar = (props) => {
     const { isMobile } = props;
+    const [anchorEl, setAnchorEl] = useState(null);
 
     const { userData, userLogout } = useContext(authContext);
-
-    const [openDrawer, setOpenDrawer] = useState(false);
 
     const handleLogout = async (e) => {
         e.preventDefault();
 
         userLogout();
+    }
+    const handleProfileMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);  
     }
 
     return (
@@ -25,32 +29,33 @@ const Navbar = (props) => {
                     {
                         isMobile ?
                         <>
-                            <Drawer
-                                anchor={"right"}
-                                open={openDrawer}
-                                onClose={() => setOpenDrawer(false)}
-                            >
-                                <ListItem button>
-                                    <ListItemText>
-                                        Sign In
-                                    </ListItemText>
-                                </ListItem>
-                                <ListItem button>
-                                    <ListItemText>
-                                        Sign Up
-                                    </ListItemText>
-                                </ListItem>
-                            </Drawer>
-                            <IconButton
+                            {/* icono de button  */}
+                            <Box>
+                                <IconButton
                                 size="large"
-                                edge="start"
+                                edge="end"
+                                aria-label="account of current user"
+                                // aria-controls={menuId}
+                                aria-haspopup="true"
+                                onClick={handleProfileMenuOpen}
                                 color="inherit"
-                                aria-label="menu"
-                                sx={{ mr: 2 }}
-                                onClick={() => setOpenDrawer(!openDrawer)}
-                            >
-                                <MenuIcon />
-                            </IconButton>
+                                >
+                                    <MoreIcon />
+                                </IconButton>
+                            </Box>
+                            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                                <IconButton
+                                 size="large"
+                                 aria-label="show more"
+                                // aria-controls={mobileMenuId}
+                                aria-haspopup="true"
+                                // onClick={handleMobileMenuOpen}
+                                color="inherit"
+                                >
+                                    <AccountCircle />
+                                    
+                                </IconButton>
+                            </Box>
                         </>
                         :
                         <></>
@@ -66,6 +71,9 @@ const Navbar = (props) => {
                         :
                              userData.logged ?
                             <>
+                                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
+                                    <AssignmentIcon />
+                                </IconButton>
                                 <Link 
                                         href="/"
                                         color="inherit" 
@@ -78,21 +86,6 @@ const Navbar = (props) => {
                             </>
                             :
                             <>
-                                <Link 
-                                    href="/login" 
-                                    color="inherit" 
-                                    underline="none"
-                                    sx={{ mr: 2 }}
-                                >
-                                    Sign In
-                                </Link>
-                                <Link 
-                                    href="/register" 
-                                    color="inherit" 
-                                    underline="none"
-                                >
-                                    Sign Up
-                                </Link>
                             </>
                     }
                     

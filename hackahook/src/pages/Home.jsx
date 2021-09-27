@@ -1,3 +1,5 @@
+// feed de Home enterprise con el modal new Bootcamp en el navbar
+
 import { useContext, useEffect, useState } from "react";
 
 import { Container } from "@mui/material"
@@ -8,7 +10,7 @@ import usersService from "../services/users";
 import { authContext } from "../context/appContext";
 
 // Seccion que muestra las bootcamps que tiene una empresa
-const Enterprise = () => {
+const Home = () => {
     const enterprise = false;
     const jsonData = [
         {
@@ -58,7 +60,7 @@ const Enterprise = () => {
     <Container container fullWidth="xs">
         {
             jsonData.map(data => {
-                return <TextArea title={data.usuario} subtitle={data.descripcion} enterprise={enterprise} btnText="Cancelar"  />
+                return <TextArea title={data.usuario} subtitle={data.descripcion} enterprise={enterprise} btnText="Inscribirse" />
             })
         }
     </Container>
@@ -66,4 +68,4 @@ const Enterprise = () => {
 }
 
 
-export default Enterprise;
+export default Home;
