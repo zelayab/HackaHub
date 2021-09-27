@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
   doc,
   getDoc,
@@ -8,10 +10,20 @@ import {
   where,
 } from "firebase/firestore/lite";
 
-class usersService {
-  constructor() {}
+const useUserData = ({ db, userData, getCurrentAuth }) => {
+  const [userInformation, setUserInformation] = useState({});
 
-  static async getUserInformation(db, uid) {
+  useEffect(() => {
+    (async () => {
+      if (userData.logged) {
+        const uid = getCurrentAuth().currentUser.uid;
+        const response = await getUserInformation(uid);
+        setUserInformation({ ...response, uid });
+      }
+    })();
+  });
+
+  const getUserInformation = async (uid) => {
     // Armamos la referencia collection "users", del documento "uid"
     // { users: { uid: {} } }
     const userRef = doc(db, "users", uid);
@@ -21,9 +33,9 @@ class usersService {
 
     // Devolvemos los datos encontrados, si no se encuentra retorna undefined
     return await userSnap.data();
-  }
+  };
 
-  static async getBootcamp(db, uid, all = false) {
+  const getBootcamp = async (uid, all = false) => {
     let result = [];
 
     // Obtiene la collection de Bootcamp
@@ -45,9 +57,9 @@ class usersService {
     });
 
     return result;
-  }
+  };
 
-  static async postBootcamp(db, uidCreator, description) {
+  const postBootcamp = async (uidCreator, description) => {
     // addDoc ya adhiere un uid aleatorio de documento
     // Obtenemos la collection bootcamps y posteamos con los datos del parametro
     const bootRef = await addDoc(collection(db, "bootcamps"), {
@@ -56,9 +68,9 @@ class usersService {
       description,
       createdAt: new Date().toISOString(),
     });
-  }
+  };
 
-  static async getSubscription(db, uid, enterprise = false, all = false) {
+  const getSubscription = async (uid, enterprise = false, all = false) => {
     let result = [];
 
     // Obtenemos las subscripciones, tenemos dos tipos
@@ -80,9 +92,9 @@ class usersService {
     });
 
     return result;
-  }
+  };
 
-  static async postSubscription(db, uidCreator, uidBootcamp) {
+  const postSubscription = async (uidCreator, uidBootcamp) => {
     // Posteamos una inscripcion en la collection subscriptions
     // uidCreator = quien lo creo
     // uidBootcamp = a que bootcamp se inscribio
@@ -91,9 +103,9 @@ class usersService {
       uidBootcamp,
       createdAt: new Date().toISOString(),
     });
-  }
+  };
 
-  static async existSubscription(db, uidCreator, uidBootcamp) {
+  const existSubscription = async (uidCreator, uidBootcamp) => {
     // Si existe una subscripcion de un usuario a una bootcamp
     // Se va documento por documento, y se chequea si:
     // El usuario es el mismo, y la bootcamp es la misma que pusimos en parametros
@@ -113,7 +125,20 @@ class usersService {
     });
 
     return count > 0 ? true : false;
-  }
-}
+  };
 
-export default usersService;
+  return {
+    // States
+    userInformation,
+
+    // Functions
+    getUserInformation,
+    getBootcamp,
+    postBootcamp,
+    getSubscription,
+    postSubscription,
+    existSubscription,
+  };
+};
+
+export default useUserData;

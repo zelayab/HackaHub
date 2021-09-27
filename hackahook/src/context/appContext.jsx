@@ -1,6 +1,7 @@
 import { createContext } from 'react';
 
 import useFirebase from '../hooks/useFirebase';
+import useUserData from '../hooks/useUserData';
 
 const authContext = createContext({});
 
@@ -14,12 +15,15 @@ const Context = (props) => {
     // Extraigo todas las funciones que me provee el hook
     const hookFirebase = useFirebase();
 
+    const db = hookFirebase.getDb();
+    const hookUserData = useUserData({ ...hookFirebase, db });
+
     return (
         // Decimos que hookFirebase va a estar dentro de este contexto
         // para obtenerlo luego
-        <authContext.Provider value={hookFirebase}>
+        <authContext.Provider value={{ ...hookFirebase, ...hookUserData }}>
             {children}
-        </authContext.Provider>
+        </authContext.Provider >
     )
 }
 

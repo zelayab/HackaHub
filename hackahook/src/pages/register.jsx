@@ -1,12 +1,13 @@
 import { useContext, useState, useRef } from 'react';
 
-import { Container, Box, Avatar, Typography, Grid, TextField, Button, Alert } from '@mui/material';
+import { Container, Box, Avatar, Typography, TextField, Button, Alert } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { authContext } from '../context/appContext';
 
 const Register = () => {
     const emailRef = useRef('');
+    const userRef = useRef('');
     const linkedinRef = useRef('');
     const paisRef = useRef('');
     const repositorioRef = useRef('');
@@ -21,6 +22,7 @@ const Register = () => {
             message: '',
         },
         email: { error: false },
+        user: { error: false },
         linkedin: { error: false },
         pais: { error: false },
         repositorio: { error: false },
@@ -35,6 +37,7 @@ const Register = () => {
         e.preventDefault();
 
         const email = emailRef.current.value;
+        const user = userRef.current.value;
         const linkedin = linkedinRef.current.value;
         const pais = paisRef.current.value;
         const repositorio = repositorioRef.current.value;
@@ -42,7 +45,7 @@ const Register = () => {
         const repPassword = repPasswordRef.current.value;
         const descripcion = descripcionRef.current.value;
 
-        userRegister(email, linkedin, pais, repositorio, password, repPassword, descripcion)
+        userRegister(email, user, linkedin, pais, repositorio, password, repPassword, descripcion)
             .then(data => {
                 console.log(data);
                 if (data.error) {
@@ -94,6 +97,14 @@ const Register = () => {
                         fullWidth
                         label="Email"
                         inputRef={emailRef}
+                    />
+
+                    <TextField
+                        margin="normal"
+                        type="text"
+                        fullWidth
+                        label="Usuario"
+                        inputRef={userRef}
                     />
 
                     <TextField

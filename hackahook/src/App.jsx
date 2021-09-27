@@ -8,44 +8,27 @@ import Register from './pages/register';
 import Enterprise from './pages/Enterprise';
 
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import { useMediaQuery } from '@mui/material';
+import { Button, useMediaQuery } from '@mui/material';
 import { authContext } from './context/appContext';
 
 import Navbar from './components/Navbar/Navbar';
-import { List, ListItem, Divider, ListItemText } from '@mui/material';
 
 const ComponenteHome = () => {
+    // const { getDb, getCurrentAuth, getUserInformation, getBootcamp, userInformation } = useContext(authContext);
+
     return (
+
         <div>
-            asd
+            <Button>a
+                {/* {userInformation.email} */}
+            </Button>
         </div>
     )
 }
 
 const App = () => {
     const { userData } = useContext(authContext);
-
     const isMobile = useMediaQuery('(max-width: 600px)')
-
-    // const protectedPath = (Component) => {
-    //     if (userData.loading)
-    //       return <Spinner />
-    
-    //     if (!userData.logged)
-    //       return <Redirect to="/login" />
-    
-    //     return <Component />
-    //   }
-    
-    //   const requireAuth = (Component) => {
-    //     if (userData.loading)
-    //       return <Spinner />
-    
-    //     if (userData.logged)
-    //       return <Redirect to="/" />
-    
-    //     return <Component />
-    //   };
 
     const checkIfRequireAuth = (requireSession, Component) => {
         if (userData.loading)
@@ -62,9 +45,9 @@ const App = () => {
 
     return (
         <Router>
-            <Navbar isMobile={isMobile}/>
+            <Navbar isMobile={isMobile} />
             <Switch>
-            <Route exact path="/"
+                <Route exact path="/"
                     render={() => checkIfRequireAuth(true, ComponenteHome)} />
 
                 <Route path="/home"
@@ -86,7 +69,7 @@ const App = () => {
                     render={() => requireAuth(Register)} /> */}
 
                 <Route path="/mybootcamp"
-                    render={() => <Enterprise/>} />
+                    render={() => <Enterprise />} />
                 <Route path="/subscriptions"
                     render={() => <span>suscriptions</span>} />
 
