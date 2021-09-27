@@ -13,6 +13,7 @@ import { authContext } from './context/appContext';
 
 import Navbar from './components/Navbar/Navbar';
 import { List, ListItem, Divider, ListItemText } from '@mui/material';
+import Home from './pages/Home';
 
 const ComponenteHome = () => {
     return (
@@ -65,10 +66,10 @@ const App = () => {
             <Navbar isMobile={isMobile}/>
             <Switch>
             <Route exact path="/"
-                    render={() => checkIfRequireAuth(true, ComponenteHome)} />
+                    render={() => checkIfRequireAuth(true, Home)} />
 
                 <Route path="/home"
-                    render={() => checkIfRequireAuth(true, ComponenteHome)} />
+                    render={() => checkIfRequireAuth(true, Home)} />
 
                 <Route path="/login"
                     render={() => checkIfRequireAuth(false, Login)} />
@@ -86,7 +87,7 @@ const App = () => {
                     render={() => requireAuth(Register)} /> */}
 
                 <Route path="/mybootcamp"
-                    render={() => <Enterprise/>} />
+                    render={() => checkIfRequireAuth(true, Enterprise)} />
                 <Route path="/subscriptions"
                     render={() => <span>suscriptions</span>} />
 

@@ -7,6 +7,7 @@ import { authContext } from '../context/appContext';
 
 const Register = () => {
     const emailRef = useRef('');
+    const usuarioRef = useRef('');
     const linkedinRef = useRef('');
     const paisRef = useRef('');
     const repositorioRef = useRef('');
@@ -21,6 +22,7 @@ const Register = () => {
             message: '',
         },
         email: { error: false },
+        usuario: { error: false },
         linkedin: { error: false },
         pais: { error: false },
         repositorio: { error: false },
@@ -35,6 +37,7 @@ const Register = () => {
         e.preventDefault();
 
         const email = emailRef.current.value;
+        const usuario = usuarioRef.current.value;
         const linkedin = linkedinRef.current.value;
         const pais = paisRef.current.value;
         const repositorio = repositorioRef.current.value;
@@ -42,7 +45,7 @@ const Register = () => {
         const repPassword = repPasswordRef.current.value;
         const descripcion = descripcionRef.current.value;
 
-        userRegister(email, linkedin, pais, repositorio, password, repPassword, descripcion)
+        userRegister(email, usuario, linkedin, pais, repositorio, password, repPassword, descripcion)
             .then(data => {
                 console.log(data);
                 if (data.error) {
@@ -166,6 +169,7 @@ const Register = () => {
                                 Registrarse
                             </Button>
                     </Grid>
+
                 </Box>
             </Box>
         </Container>
