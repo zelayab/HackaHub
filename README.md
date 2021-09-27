@@ -1,6 +1,6 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with: [Firebase],[MaterialUI],[CreateReactApp]
+This project was created with: [Firebase],[MaterialUI],[CreateReactApp]
 
 ## This project
 
