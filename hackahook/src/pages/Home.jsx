@@ -57,23 +57,21 @@ const Home = () => {
         setOpen(false);
     }
 
-    console.log(userInformation);
-
     return (
         <Container fullWidth="xs">
             {userInformation.type ?
                 <></>
-            :
-             <AlertDialog 
-                open={open} 
-                handleReject={handleReject}
-                handleAccept={handleAccept}
-                handleClose={handleClose}
-                title="Inscribirse al bootcamp"
-                text="¿ Quieres inscribirte ?"
-                /> 
+                :
+                <AlertDialog
+                    open={open}
+                    handleReject={handleReject}
+                    handleAccept={handleAccept}
+                    handleClose={handleClose}
+                    title="Inscribirse al bootcamp"
+                    text="¿ Quieres inscribirte ?"
+                />
             }
-                
+
             {
                 jsonData.map((data, index) => {
                     return (

@@ -20,6 +20,13 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
         const response = await getUserInformation(uid);
 
         setUserInformation({ ...response, uid });
+        localStorage.setItem("type", response.type);
+      } else {
+        const type =
+          userInformation.type === undefined
+            ? JSON.parse(localStorage.getItem("type"))
+            : userInformation.type;
+        setUserInformation({ ...userInformation, type });
       }
     })();
   }, [userData]);

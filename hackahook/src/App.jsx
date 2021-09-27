@@ -36,7 +36,6 @@ const App = () => {
         if (userData.loading)
             return <Spinner />
 
-        console.log("userLogged: " + userData.logged);
         if (requireSession && !userData.logged)
             return <Redirect to="/login" />
 

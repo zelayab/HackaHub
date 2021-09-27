@@ -73,8 +73,8 @@ const Enterprise = () => {
 
     return (
         <Container maxWidth="xs">
-             <AlertDialog 
-                open={open} 
+            <AlertDialog
+                open={open}
                 handleReject={handleReject}
                 handleAccept={handleAccept}
                 handleClose={handleClose}
