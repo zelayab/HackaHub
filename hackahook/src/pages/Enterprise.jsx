@@ -77,6 +77,16 @@ const Enterprise = (props) => {
         );
     }
 
+    // Dots
+    const handleEditar = (descripcion) => {
+        console.log("increiblemente esto esta bug, no pasa de dotsbootcamp a enterprise...")
+        console.log(descripcion);
+    }
+
+    const handleBorrar = () => {
+        console.log('borrar button');
+    }
+
     return (
         <Container maxWidth="xs">
             <AlertDialog
@@ -96,6 +106,8 @@ const Enterprise = (props) => {
                     subtitle={bootcamp.descripcion}
                     enterprise={userInformation.type}
                     handleOpen={handleOpen}
+                    handleEditar={handleEditar}
+                    handleBorrar={handleBorrar}
                     showEdition={true}
                     btnText="Cancelar"
                 />))

@@ -4,6 +4,10 @@ import DotsBootcamp from '../DotsBootcamp/DotsBootcamp';
 import SendIcon from '@mui/icons-material/Send';
 
 const TextArea = (props) => {
+    // por alguna razon no me capta el prop de un prop
+    const wrapperHandleEditar = () => props.handleEditar();
+    const wrapperHandleBorrar = () => props.handleBorrar();
+
     return (
         <Paper elevation={1} sx={{ p: 4, m: 2 }}>
             <Grid container>
@@ -15,10 +19,15 @@ const TextArea = (props) => {
                         {props.title}
                     </Typography>
                     {
-                        (!props.showEdition || !props.enterprise) ?
-                            <></>
+                        (props.showEdition && props.enterprise) ?
+                            <DotsBootcamp
+                                index={props.index}
+                                enterprise={props.enterprise}
+                                handleEditar={wrapperHandleEditar}
+                                handleBorrar={wrapperHandleBorrar}
+                            />
                             :
-                            <DotsBootcamp />
+                            <></>
                     }
 
                 </Grid>

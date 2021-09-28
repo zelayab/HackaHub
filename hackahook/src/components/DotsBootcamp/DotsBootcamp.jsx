@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import AlertDialog from '../Dialog/Dialog'
+
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -9,7 +11,8 @@ const ITEM_HEIGHT = 48;
 
 const DotsBootcamp = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
-    const open = Boolean(anchorEl);
+    const dotsOpen = Boolean(anchorEl);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -17,21 +20,52 @@ const DotsBootcamp = (props) => {
         setAnchorEl(null);
     };
 
-    const handleEditar = () => {
-        console.log('editar button');
+    //
+    const [descripcion, setDescripcion] = useState('');
+    const [open, setOpen] = useState(false);
+
+    const handleChange = (e) => {
+        setDescripcion(e.target.value);
     }
 
-    const handleBorrar = () => {
-        console.log('borrar button');
+    const handleDialogClose = () => {
+        setOpen(false);
     }
+
+    const handleDialogReject = () => {
+        setOpen(false);
+    }
+
+    const handleDialogAccept = () => {
+        setOpen(false);
+        console.log(descripcion)
+        props.handleEditar(descripcion);
+    }
+
+    const handleDialogOpen = () => {
+        setOpen(true);
+    }
+
+    console.log(props.index);
 
     return (
         <>
+            <AlertDialog
+                open={open}
+                handleReject={handleDialogReject}
+                handleAccept={handleDialogAccept}
+                handleClose={handleDialogClose}
+                title="Editar la descripcion de tu bootcamp"
+                text="Inserta una descripcion nueva tu bootcamp"
+
+                insertTextField="true"
+                handleChange={(e) => setDescripcion(e.target.value)}
+            />
             <IconButton
                 aria-label="more"
                 id="long-button"
                 aria-controls="long-menu"
-                aria-expanded={open ? 'true' : undefined}
+                aria-expanded={dotsOpen ? 'true' : undefined}
                 aria-haspopup="true"
                 onClick={handleClick}
             >
@@ -46,7 +80,7 @@ const DotsBootcamp = (props) => {
                     'aria-labelledby': 'long-button',
                 }}
                 anchorEl={anchorEl}
-                open={open}
+                open={dotsOpen}
                 onClose={handleClose}
                 PaperProps={{
                     style: {
@@ -55,15 +89,16 @@ const DotsBootcamp = (props) => {
                     },
                 }}
             >
-                <MenuItem onClick={handleEditar}>
+                <MenuItem onClick={handleDialogOpen}>
                     Editar
                 </MenuItem>
-                <MenuItem onClick={handleBorrar}>
+                <MenuItem onClick={handleDialogOpen}>
                     Borrar
                 </MenuItem>
             </Menu>
         </>
     )
 }
+
 
 export default DotsBootcamp;

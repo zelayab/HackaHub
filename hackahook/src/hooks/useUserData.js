@@ -193,6 +193,7 @@ const useUserData = ({
     getBootcamp,
     getBootcampInfo,
     postBootcamp,
+    deleteBootcamp,
     getSubscription,
     postSubscription,
     existSubscription,
