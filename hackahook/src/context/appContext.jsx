@@ -16,6 +16,7 @@ const Context = (props) => {
     const hookFirebase = useFirebase();
 
     const db = hookFirebase.getDb();
+
     const hookUserData = useUserData({ ...hookFirebase, db });
 
     return (

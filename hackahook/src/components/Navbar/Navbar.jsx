@@ -4,9 +4,8 @@ import { useHistory } from 'react-router-dom';
 import { authContext } from '../../context/appContext';
 import { Box } from '@mui/system';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { AppBar, IconButton, Toolbar, Typography, Link, Button, Menu, MenuItem } from '@mui/material';
+import { AppBar, IconButton, Toolbar, Typography, Menu, MenuItem } from '@mui/material';
 import CreateBootcamp from '../CreateBootcamp/CreateBootcamp';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import HomeIcon from '@mui/icons-material/Home';
 import WorkIcon from '@mui/icons-material/Work';
 

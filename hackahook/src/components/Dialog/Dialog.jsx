@@ -40,7 +40,7 @@ export default function AlertDialog(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={props.handleReject}>No Aceptar</Button>
-          <Button onClick={props.handleAccept} autoFocus>
+          <Button onClick={() => props.handleAccept(props.dataBootcamp)} autoFocus>
             Aceptar
           </Button>
         </DialogActions>

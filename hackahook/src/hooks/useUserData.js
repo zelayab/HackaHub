@@ -1,35 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useCallback } from "react";
 
 import {
   doc,
   getDoc,
   getDocs,
   addDoc,
+  deleteDoc,
   orderBy,
   collection,
   query,
   where,
 } from "firebase/firestore/lite";
 
-const useUserData = ({ db, userData, getCurrentAuth }) => {
-  const [userInformation, setUserInformation] = useState({});
+const useUserData = ({
+  db,
+  userData,
+  getCurrentAuth,
+  userInformation,
+  setUserInformation,
+}) => {
+  const getInfo = useCallback(async () => {
+    if (userData.logged) {
+      const uid = getCurrentAuth().currentUser.uid;
+      const response = await getUserInformation(uid);
+      // console.log(response);
+      setUserInformation({ ...response, uid });
+    }
+  });
 
   useEffect(() => {
-    (async () => {
-      if (userData.logged) {
-        const uid = getCurrentAuth().currentUser.uid;
-        const response = await getUserInformation(uid);
-
-        setUserInformation({ ...response, uid });
-        localStorage.setItem("type", response.type);
-      } else {
-        const type =
-          userInformation.type === undefined
-            ? JSON.parse(localStorage.getItem("type"))
-            : userInformation.type;
-        setUserInformation({ ...userInformation, type });
-      }
-    })();
+    getInfo();
   }, [userData]);
 
   const getUserInformation = async (uid) => {
@@ -57,11 +57,7 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
         ? // Todos los bootcamp
           query(collection(db, "bootcamps"), orderBy("createdAt", "desc"))
         : // Filtrado por uid
-          query(
-            collection(db, "bootcamps"),
-            where("uidCreator", "==", uid),
-            orderBy("createdAt", "desc")
-          );
+          query(collection(db, "bootcamps"), where("uidCreator", "==", uid));
 
       // Dependiendo del query, son los datos que se van a devolver
       const querySnapshot = await getDocs(q);
@@ -69,7 +65,7 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
       // // Obtenemos los datos, los guardamos en un array y los retornamos
       // // En caso de no haber resultados se retorna []
       querySnapshot.forEach((doc) => {
-        result.push(doc.data());
+        result.push({ ...doc.data(), uidBootcamp: doc.id });
       });
     } catch (error) {}
 
@@ -93,15 +89,15 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
     // Obtenemos las subscripciones, tenemos dos tipos
     // enterprise = true, devuelve los usuarios que se inscribieron a la bootcamp (uid empresa)
     // enterprise = false, devuelve las bootcamps que se inscribio un usuario (uid usuario)
+
     try {
       const q = all
         ? // Todos los bootcamp
-          query(collection(db, "subscriptions"), orderBy("createdAt", "desc"))
+          query(collection(db, "subscriptions"))
         : // Filtrado por uid
           query(
             collection(db, "subscriptions"),
-            where(enterprise ? "uidBootcamp" : "uidCreator", "==", uid),
-            orderBy("createdAt", "desc")
+            where(enterprise ? "uidBootcamp" : "uidCreator", "==", uid)
           );
 
       const querySnapshot = await getDocs(q);
@@ -147,17 +143,60 @@ const useUserData = ({ db, userData, getCurrentAuth }) => {
     return count > 0 ? true : false;
   };
 
+  // not finished
+  const deleteBootcamp = async (uidCreator, uidBootcamp) => {
+    const q = query(
+      collection(db, "bootcamps"),
+      where("uidCreator", "==", uidCreator),
+      where("uidBootcamp", "==", uidBootcamp)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach(async (subscripcion) => {
+      const documentId = subscripcion.id;
+      console.log(documentId);
+      const document = doc(db, "subscriptions", documentId);
+      await deleteDoc(document);
+    });
+  };
+
+  const deleteSubscription = async (uidCreator, uidBootcamp) => {
+    const q = query(
+      collection(db, "subscriptions"),
+      where("uidCreator", "==", uidCreator),
+      where("uidBootcamp", "==", uidBootcamp)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach(async (subscripcion) => {
+      const documentId = subscripcion.id;
+      const document = doc(db, "subscriptions", documentId);
+      await deleteDoc(document);
+    });
+  };
+
+  const getBootcampInfo = async (uidBootcamp) => {
+    const q = doc(db, "bootcamps", uidBootcamp);
+    const bootcamp = await getDoc(q);
+
+    return bootcamp.data();
+  };
+
   return {
     // States
-    userInformation,
+    // userInformation,
 
     // Functions
     getUserInformation,
     getBootcamp,
+    getBootcampInfo,
     postBootcamp,
     getSubscription,
     postSubscription,
     existSubscription,
+    deleteSubscription,
   };
 };
 

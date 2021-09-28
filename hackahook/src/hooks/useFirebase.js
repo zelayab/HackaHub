@@ -36,6 +36,10 @@ const useFirebase = () => {
 
   const auth = getAuth(); // Firebase/auth
 
+  const [userInformation, setUserInformation] = useState({
+    type: JSON.parse(localStorage.getItem("type")),
+  });
+
   const [userData, setUserData] = useState({
     loading: true, // Verificar si esta en proceso de autentificado (fetching)a
     logged: false, // Verificar si esta logueado
@@ -171,6 +175,8 @@ const useFirebase = () => {
   };
 
   return {
+    userInformation,
+    setUserInformation,
     userLogin, // Nos permite acceder
     userRegister, // Nos permite registrarnos
     userLogout, // Nos permite salir de la cuenta

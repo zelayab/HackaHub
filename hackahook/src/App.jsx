@@ -7,25 +7,12 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Enterprise from './pages/Enterprise';
 
-import { BrowserRouter as Router, Switch, Route, Redirect, useLocation } from 'react-router-dom';
-import { Button, useMediaQuery } from '@mui/material';
+import { BrowserRouter as Router, Switch, Route, useLocation } from 'react-router-dom';
+import { useMediaQuery } from '@mui/material';
 import { authContext } from './context/appContext';
 
 import Navbar from './components/Navbar/Navbar';
 import Home from './pages/Home';
-
-const ComponenteHome = () => {
-    // const { getDb, getCurrentAuth, getUserInformation, getBootcamp, userInformation } = useContext(authContext);
-
-    return (
-
-        <div>
-            <Button>a
-                {/* {userInformation.email} */}
-            </Button>
-        </div>
-    )
-}
 
 // Middleware para chequear los accesos loading etc
 const CheckIfRequireAuth = (props) => {
@@ -46,17 +33,17 @@ const CheckIfRequireAuth = (props) => {
     // Si quiere entrar al login, por alguna razón pero esta logueado
     // Lo mandamos al Home
     if (!requireSession && userData.logged)
-        return <Home pathname={location} />
+        return <Home />
 
     // Si es de tipo empresa y trata de entrar al url de mybootcamp
     // Lo mandamos a el url de subscripciones
     if (location === '/mybootcamp' && !userInformation.type)
-        return <Redirect to="/mybootcamp" />
+        return <Enterprise pathname="/subscriptions" />
 
     // Si es de tipo empresa y trata de entrar al url de subscripciones
     // Lo mandamos a el url de mybootcamp
     if (location === '/subscriptions' && userInformation.type)
-        return <Redirect to="/mybootcamp" />
+        return <Enterprise pathname="/mybootcamp" />
 
     // Caso contrario mandamos el componente de la ruta normalmente
     return <Component pathname={location} />
@@ -82,6 +69,7 @@ const App = () => {
 
                 <Route path="/mybootcamp"
                     render={() => <CheckIfRequireAuth requireSession={true} Component={Enterprise} />} />
+
                 <Route path="/subscriptions"
                     render={() => <CheckIfRequireAuth requireSession={true} Component={Enterprise} />} />
 

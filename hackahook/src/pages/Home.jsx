@@ -10,12 +10,12 @@ import { authContext } from "../context/appContext";
 
 // Seccion que muestra las bootcamp en general
 const Home = () => {
-    const { userData, userInformation, getBootcamp, getUserInformation } = useContext(authContext);
+    const { userData, userInformation, getBootcamp, getUserInformation, postSubscription } = useContext(authContext);
     const [listInformation, setListInformation] = useState([]);
+    const [lastIndex, setLastIndex] = useState(0);
 
     const getBootcamps = useCallback(async () => {
         let bootcampResult = [];
-
         if (userData.logged) {
             // Obtenemos TODAS las bootcamp
             const bootcamp = await getBootcamp(userInformation.uid, true);
@@ -45,7 +45,6 @@ const Home = () => {
     }, [userData]);
 
     const [open, setOpen] = useState(false);
-    const [lastIndex, setLastIndex] = useState(null);
 
     const handleOpen = (index) => {
         setOpen(true);
@@ -57,13 +56,14 @@ const Home = () => {
     }
 
     const handleReject = () => {
-        console.log("reject: " + lastIndex);
         setOpen(false);
     }
 
     const handleAccept = () => {
-        console.log("accept: " + lastIndex);
         setOpen(false);
+        const data = listInformation[lastIndex];
+
+        postSubscription(userInformation.uid, data.uidBootcamp);
     }
 
     return (

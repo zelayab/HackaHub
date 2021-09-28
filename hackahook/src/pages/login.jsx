@@ -19,7 +19,7 @@ const Login = () => {
         password: { error: false, }
     });
 
-    const { userLogin, userData, setUserData, userSendPasswordRecover } = useContext(authContext);
+    const { userLogin, userSendPasswordRecover } = useContext(authContext);
 
     const handleRecoverPassword = (e) => {
         e.preventDefault();

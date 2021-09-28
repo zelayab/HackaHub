@@ -7,33 +7,53 @@ import { authContext } from "../context/appContext";
 
 // Seccion que muestra las bootcamps que tiene una empresa
 const Enterprise = (props) => {
-    const { userData, getBootcamp, getSubscription, userInformation } = useContext(authContext);
+    const { userData, getUserInformation, userInformation, getBootcamp, getSubscription, getBootcampInfo, deleteSubscription } = useContext(authContext);
     const [listInformation, setListInformation] = useState([]);
+    const [open, setOpen] = useState(false);
+    const [lastIndex, setLastIndex] = useState(null);
 
-    useEffect(() => {
-        (async () => {
-            if (userData.logged) {
-                if (userInformation.type && props.pathname === "/mybootcamp") {
+    const getBootcamps = async () => {
+        if (userData.logged) {
+            if (userInformation.uid !== undefined) {
+                if (props.pathname === "/mybootcamp") {
                     // Obtenemos la bootcamp que tiene la empresa
                     const bootcamp = await getBootcamp(userInformation.uid);
+
+                    for (let i = 0; i < bootcamp.length; i++) {
+                        const resEnterprise = await getUserInformation(bootcamp[i].uidCreator);
+                        bootcamp[i] = {
+                            ...bootcamp[i], ...{ usuario: resEnterprise.usuario }
+                        };
+                    }
 
                     // Seteamos la lista de bootcamp para hacer un re-render este componente
                     setListInformation(bootcamp);
                 }
-                else {
-                    const subscription = await getSubscription(userInformation.uid, false);
+                else if (props.pathname === "/subscriptions") {
+                    let subscription = await getSubscription(userInformation.uid, false);
+
+                    for (let i = 0; i < subscription.length; i++) {
+                        const resBootcamp = await getBootcampInfo(subscription[i].uidBootcamp);
+                        const resEnterprise = await getUserInformation(resBootcamp.uidCreator);
+
+                        subscription[i] = {
+                            ...subscription[i], ...{ usuario: resEnterprise.usuario, descripcion: resBootcamp.descripcion }
+                        };
+                    }
 
                     setListInformation(subscription);
                 }
             }
-        })();
+        }
+    };
+
+    useEffect(() => {
+        getBootcamps();
         // [userData] significa que cada vez que el state 'userData' cambie, se refresca este useEffect
         // Esto es porque al principio userData contiene un logged false, y al cambiar a true ejecutamos el que si va
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userData]);
+    }, [userData, userInformation]);
 
-    const [open, setOpen] = useState(false);
-    const [lastIndex, setLastIndex] = useState(null);
 
     const handleOpen = (index) => {
         setOpen(true);
@@ -45,13 +65,16 @@ const Enterprise = (props) => {
     }
 
     const handleReject = () => {
-        console.log("reject: " + lastIndex);
         setOpen(false);
     }
 
     const handleAccept = () => {
-        console.log("accept: " + lastIndex);
         setOpen(false);
+        const data = listInformation[lastIndex];
+        deleteSubscription(userInformation.uid, data.uidBootcamp);
+        setListInformation(
+            listInformation.filter(info => info.uidBootcamp === data.uidBootcamp)
+        );
     }
 
     return (
@@ -65,13 +88,15 @@ const Enterprise = (props) => {
                 text="¿ Quieres cancelar tu inscripcion ?"
             />
             {
-                listInformation.map(bootcamp =>
+                listInformation.map((bootcamp, index) =>
                 (<TextArea
-                    key={bootcamp}
-                    title={userInformation.usuario}
-                    subtitle={userInformation.descripcion}
+                    key={index}
+                    index={index}
+                    title={bootcamp.usuario}
+                    subtitle={bootcamp.descripcion}
                     enterprise={userInformation.type}
                     handleOpen={handleOpen}
+                    showEdition={true}
                     btnText="Cancelar"
                 />))
             }
