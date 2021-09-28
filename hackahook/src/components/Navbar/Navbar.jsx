@@ -12,7 +12,6 @@ import WorkIcon from '@mui/icons-material/Work';
 const Navbar = (props) => {
     let history = useHistory();
 
-    const { isMobile } = props;
     const [anchorEl, setAnchorEl] = useState(null);
 
     const { userData, userLogout, userInformation, postBootcamp } = useContext(authContext);
