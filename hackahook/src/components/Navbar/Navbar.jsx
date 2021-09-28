@@ -6,11 +6,6 @@ import { Box } from '@mui/system';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { AppBar, IconButton, Toolbar, Typography, Menu, MenuItem } from '@mui/material';
 import CreateBootcamp from '../CreateBootcamp/CreateBootcamp';
-<<<<<<< HEAD
-=======
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import LogoutIcon from '@mui/icons-material/Logout';
->>>>>>> 85a70c05d0394849a523657ff571567c1112f382
 import HomeIcon from '@mui/icons-material/Home';
 import WorkIcon from '@mui/icons-material/Work';
 
@@ -44,126 +39,60 @@ const Navbar = (props) => {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
                 <Toolbar>
-                
                     {/* Brand */}
-                    <Link 
-                        color="inherit" 
-                        href="/home" 
-                        variant="h5" 
-                        sx={{ flexGrow: 1, textDecoration:'none' }}
-                    >      
-                        HackaJob 
-                    </Link>
+                    <Typography onClick={() => history.push('/')} component="div" variant="h6" sx={{ flexGrow: 1 }}>
+                        HackaJob
+                    </Typography>
 
                     {/* Right Buttons*/}
                     {
                         (userData.loading || !userData.logged) ?
                             <></>
                             :
-                                <> {
-                                    isMobile ?
-                                    <>
-                                    {
-                                        !userInformation.type ? <></>
-                                            :
-                                            <CreateBootcamp isMobile={isMobile} userInformation={userInformation} postBootcamp={postBootcamp} />
+                            <>
+                                <IconButton onClick={() => history.push('/home')} size="medium" aria-label="show 4 new mails" color="inherit">
+                                    <HomeIcon />
+                                </IconButton>
+                                <IconButton onClick={handleRedirect} sx={{ mr: { xs: 0, sm: userInformation.type ? 3 : 0 } }} size="medium" aria-label="show 4 new mails" color="inherit">
+                                    <WorkIcon />
+                                </IconButton>
 
-                                    }
-                                     <IconButton
-                                        size="medium"
-                                        aria-label="account of current user"
-                                        aria-controls="menu-appbar"
-                                        aria-haspopup="true"
-                                        onClick={handleMenu}
-                                        color="inherit"
-                                    >
-                                        <AccountCircle />
-                                    </IconButton>
-                                        <Menu
-                                            anchorEl={anchorEl}
-                                            anchorOrigin={{
-                                                vertical: 'top',
-                                                horizontal: 'right',
-                                            }}
-                                            keepMounted
-                                            transformOrigin={{
-                                                vertical: 'top',
-                                                horizontal: 'right',
-                                            }}
-                                            open={Boolean(anchorEl)}
-                                            onClose={handleClose}
-                                        >
-                                            {/* <MenuItem onClick={}>
-                                                {userInformation.type ? "Mis Bootcamp" : "Mis Inscripciones"}
-                                            </MenuItem> */}
-                                            <MenuItem onClick={() => history.push('/home')}>
-                                                <IconButton o size="medium" aria-label="show 4 new mails" color="inherit">
-                                                    <HomeIcon />
-                                                </IconButton>
-                                                Home
-                                            </MenuItem>
-                                            <MenuItem onClick={handleRedirect}>
-                                                <IconButton  sx={{ mr: { xs: 0, sm: userInformation.type ? 3 : 0 } }} size="medium" aria-label="show 4 new mails" color="inherit">
-                                                    <WorkIcon /> 
-                                                </IconButton> 
-                                                {userInformation.type ? "Mis Bootcamp" : "Mis Inscripciones"}
-                                            </MenuItem>
-                                            <MenuItem onClick={handleLogout}>
-                                                <IconButton>
-                                                    <LogoutIcon/>
-                                                </IconButton>
-                                                Salir
-                                            </MenuItem>
-                                        </Menu>
-                                    </>
-                                    
-                                    :
-                                    <>
-                                    <IconButton onClick={() => history.push('/home')} size="medium" aria-label="show 4 new mails" color="inherit">
-                                        <HomeIcon />
-                                    </IconButton>
-                                    <IconButton onClick={handleRedirect} sx={{ mr: { xs: 0, sm: userInformation.type ? 3 : 0 } }} size="medium" aria-label="show 4 new mails" color="inherit">
-                                        <WorkIcon />
-                                    </IconButton>
+                                {
+                                    !userInformation.type ? <></>
+                                        :
+                                        <CreateBootcamp userInformation={userInformation} postBootcamp={postBootcamp} />
 
-                                    {
-                                        !userInformation.type ? <></>
-                                            :
-                                            <CreateBootcamp isMobile={isMobile} userInformation={userInformation} postBootcamp={postBootcamp} />
+                                }
 
-                                    }
-
-                                    <IconButton
-                                        size="medium"
-                                        aria-label="account of current user"
-                                        aria-controls="menu-appbar"
-                                        aria-haspopup="true"
-                                        onClick={handleMenu}
-                                        color="inherit"
-                                    >
-                                        <AccountCircle />
-                                    </IconButton>
-                                    <Menu
-                                        anchorEl={anchorEl}
-                                        anchorOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        keepMounted
-                                        transformOrigin={{
-                                            vertical: 'top',
-                                            horizontal: 'right',
-                                        }}
-                                        open={Boolean(anchorEl)}
-                                        onClose={handleClose}
-                                    >
-                                        {/* <MenuItem onClick={}>
-                                            {userInformation.type ? "Mis Bootcamp" : "Mis Inscripciones"}
-                                        </MenuItem> */}
-                                        <MenuItem onClick={handleLogout}>Salir</MenuItem>
-                                    </Menu>
-                                     </>
-                                } 
+                                <IconButton
+                                    size="medium"
+                                    aria-label="account of current user"
+                                    aria-controls="menu-appbar"
+                                    aria-haspopup="true"
+                                    onClick={handleMenu}
+                                    color="inherit"
+                                >
+                                    <AccountCircle />
+                                </IconButton>
+                                <Menu
+                                    anchorEl={anchorEl}
+                                    anchorOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    keepMounted
+                                    transformOrigin={{
+                                        vertical: 'top',
+                                        horizontal: 'right',
+                                    }}
+                                    open={Boolean(anchorEl)}
+                                    onClose={handleClose}
+                                >
+                                    {/* <MenuItem onClick={}>
+                                        {userInformation.type ? "Mis Bootcamp" : "Mis Inscripciones"}
+                                    </MenuItem> */}
+                                    <MenuItem onClick={handleLogout}>Salir</MenuItem>
+                                </Menu>
                             </>
                     }
 

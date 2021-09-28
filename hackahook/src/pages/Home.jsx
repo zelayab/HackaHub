@@ -91,7 +91,6 @@ const Home = () => {
                             subtitle={data.descripcion}
                             enterprise={userInformation.type}
                             handleOpen={handleOpen}
-                            isSuscribed="true"
                             btnText="Inscribirse"
                         />
                     )
